@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XmlDocMarkdown.Core</name>
+    </assembly>
+    <members>
+        <member name="T:XmlDocMarkdown.Core.ExternalDocumentation">
+            <summary>
+            Configures external documentation.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.ExternalDocumentation.Namespace">
+            <summary>
+            The namespace to configure.
+            </summary>
+        </member>
+        <member name="T:XmlDocMarkdown.Core.XmlDocMarkdownGenerator">
+            <summary>
+            Generates Markdown from .NET XML documentation comments.
+            </summary>
+        </member>
+        <member name="M:XmlDocMarkdown.Core.XmlDocMarkdownGenerator.Generate(System.String,System.String,XmlDocMarkdown.Core.XmlDocMarkdownSettings)">
+            <summary>
+            Generates Markdown from .NET XML documentation comments.
+            </summary>
+            <param name="inputPath">The input assembly.</param>
+            <param name="outputPath">The output directory.</param>
+            <param name="settings">The settings.</param>
+            <returns>The names of files that were added, changed, or removed.</returns>
+        </member>
+        <member name="T:XmlDocMarkdown.Core.XmlDocMarkdownResult">
+            <summary>
+            The names of files that were added, changed, or removed.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownResult.Added">
+            <summary>
+            The names of files that were added.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownResult.Changed">
+            <summary>
+            The names of files that were changed.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownResult.Removed">
+            <summary>
+            The names of files that were removed.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownResult.Messages">
+            <summary>
+            Messages that should be displayed (unless quiet).
+            </summary>
+        </member>
+        <member name="T:XmlDocMarkdown.Core.XmlDocMarkdownSettings">
+            <summary>
+            Settings for markdown generation.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.SourceCodePath">
+            <summary>
+            The URL of the folder containing the source code of the assembly, e.g. at GitHub.
+            </summary>
+            <remarks>The URL may be absolute or relative. Required to generate source code
+            links in the See Also sections for types.</remarks>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.RootNamespace">
+            <summary>
+            The root namespace of the input assembly.
+            </summary>
+            <remarks>Used to generate source code links in the See Also sections for types.
+            If omitted, the tool guesses the root namespace from the exported types.</remarks>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.IncludeObsolete">
+            <summary>
+            If true, generates documentation for obsolete types and members. (Default false.)
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.VisibilityLevel">
+            <summary>
+            The minimum visibility for documented types and members.
+            </summary>
+            <remarks>Defaults to <c>Protected</c>.</remarks>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.NewLine">
+            <summary>
+            Indicates the newline used in the output.
+            </summary>
+            <remarks>Defaults to <c>"\r\n"</c> or <c>"\n"</c>, depending on the platform.</remarks>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.ShouldClean">
+            <summary>
+            If true, deletes previously generated files that are no longer used.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.IsQuiet">
+            <summary>
+            If true, suppresses normal console output.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.IsDryRun">
+            <summary>
+            If true, executes without making changes to the file system.
+            </summary>
+        </member>
+        <member name="P:XmlDocMarkdown.Core.XmlDocMarkdownSettings.ExternalDocs">
+            <summary>
+            Configures external documentation.
+            </summary>
+        </member>
+        <member name="T:XmlDocMarkdown.Core.XmlDocVisibilityLevel">
+            <summary>
+            The minimum visibility for documented types and members.
+            </summary>
+        </member>
+        <member name="F:XmlDocMarkdown.Core.XmlDocVisibilityLevel.Private">
+            <summary>
+            All types and members are documented.
+            </summary>
+        </member>
+        <member name="F:XmlDocMarkdown.Core.XmlDocVisibilityLevel.Internal">
+            <summary>
+            Only public, protected, and internal types and members are documented.
+            </summary>
+        </member>
+        <member name="F:XmlDocMarkdown.Core.XmlDocVisibilityLevel.Protected">
+            <summary>
+            Only public and protected types and members are documented.
+            </summary>
+        </member>
+        <member name="F:XmlDocMarkdown.Core.XmlDocVisibilityLevel.ProtectedInternal">
+            <summary>
+            Reserved for internal use.
+            </summary>
+        </member>
+        <member name="F:XmlDocMarkdown.Core.XmlDocVisibilityLevel.Public">
+            <summary>
+            Only public types and members are documented.
+            </summary>
+        </member>
+    </members>
+</doc>

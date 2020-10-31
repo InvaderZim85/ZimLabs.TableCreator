@@ -2,6 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Andreas Pouwels</Authors>
+    <Company />
+    <Description>Library to convert a list of values into a "table" (ASCII-styled, markdown, csv)</Description>
+    <Copyright>Andreas Pouwels</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
+    <PackageIcon>Logo.png</PackageIcon>
+    <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\Proggen\Utility\ZimLabs.TableCreator\ZimLabs.TableCreator\ZimLabs.TableCreator.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="$(SolutionDir)Tools\gitDoc\GitDocGenerator.exe -p $(TargetPath) -o $(SolutionDir)docs -n ZimLabs.TableCreator -g &quot;https://github.com/InvaderZim85/ZimLabs.TableCreator&quot;" />
+  </Target>
 
 </Project>

@@ -20,7 +20,7 @@ namespace ZimLabs.TableCreator
         /// <summary>
         /// Contains the maximal length for the line number
         /// </summary>
-        private static int _maxLineLength;
+        private static int _maxLineLength = 3;
 
         /// <summary>
         /// Contains the desired table type
@@ -88,7 +88,8 @@ namespace ZimLabs.TableCreator
                 printList.Add(lineEntry);
             }
 
-            _maxLineLength = count.ToString().Length;
+            // 3 = "Row"
+            _maxLineLength = count.ToString().Length > 3 ? count.ToString().Length : 3;
 
             // Get the max values
             var widthList = GetColumnWidthList(properties, printList);
@@ -214,7 +215,7 @@ namespace ZimLabs.TableCreator
             if (_printLineNumbers)
             {
                 if (header)
-                    result += $" {"#".PadRight(_maxLineLength)} {lineStartEnd}";
+                    result += $" {"Row".PadRight(_maxLineLength)} {lineStartEnd}";
                 else
                     result += $" {line.Id.ToString().PadLeft(_maxLineLength)} {lineStartEnd}";
             }

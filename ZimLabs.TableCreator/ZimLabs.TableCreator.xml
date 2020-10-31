@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ZimLabs.TableCreator</name>
+    </assembly>
+    <members>
+        <member name="T:ZimLabs.TableCreator.AppearanceAttribute">
+            <summary>
+            Represents an attribute to modify the appearance of a column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.Name">
+            <summary>
+            Gets or sets the name of the column which should be used
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.Format">
+            <summary>
+            Gets or sets the format of the value
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.TextAlign">
+            <summary>
+            Gets or sets the text align
+            </summary>
+        </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.ColumnWidth">
+            <summary>
+            Provides the maximal length of a column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ColumnWidth.ColumnName">
+            <summary>
+            Gets the name of the column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ColumnWidth.Width">
+            <summary>
+            Gets the width of the column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ColumnWidth.Align">
+            <summary>
+            Gets the align of the text
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.ColumnWidth.#ctor(System.String,System.Int32,ZimLabs.TableCreator.TextAlign)">
+            <summary>
+            Creates a new instance of the <see cref="T:ZimLabs.TableCreator.DataObjects.ColumnWidth"/>
+            </summary>
+            <param name="columnName">The name of the column</param>
+            <param name="width">The width of the column</param>
+            <param name="align">The align of the column (optional)</param>
+        </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.LineEntry">
+            <summary>
+            Represents a single entry of the given list
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.LineEntry.Id">
+            <summary>
+            Gets or sets the id of the entry
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.LineEntry.IsHeader">
+            <summary>
+            Gets or sets the value which indicates if the entry represents the header 
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.LineEntry.Values">
+            <summary>
+            Gets or sets the list with the values
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.LineEntry.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Creates a new instance of the <see cref="T:ZimLabs.TableCreator.DataObjects.LineEntry"/>
+            </summary>
+            <param name="id">The id of the entry</param>
+            <param name="isHeader">The value which indicates if the line represents the header (optional)</param>
+        </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.ValueEntry">
+            <summary>
+            Represents a single value
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.DataObjects.ValueEntry._customColumnName">
+            <summary>
+            Contains the custom column name
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ValueEntry.ColumnName">
+            <summary>
+            Gets the name of the column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ValueEntry.DisplayName">
+            <summary>
+            Gets the display name of the column
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.ValueEntry.Value">
+            <summary>
+            Gets the value
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.ValueEntry.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new instance of the <see cref="T:ZimLabs.TableCreator.DataObjects.ValueEntry"/>
+            </summary>
+            <param name="columnName">The name of the column</param>
+            <param name="value">The value which should be shown</param>
+            <param name="customColumnName">THe display name</param>
+        </member>
+        <member name="T:ZimLabs.TableCreator.OutputType">
+            <summary>
+            The different supported table types
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.OutputType.Default">
+            <summary>
+            The default table type
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.OutputType.Markdown">
+            <summary>
+            The table as markdown
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.OutputType.Csv">
+            <summary>
+            The table as a comma separated value list
+            </summary>
+        </member>
+        <member name="T:ZimLabs.TableCreator.TableCreator">
+            <summary>
+            Provides the function to convert a list of objects into a "table" (ASCII style, markdown, csv)
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TableCreator._printLineNumbers">
+            <summary>
+            Contains the value which indicates if the line numbers should be printed
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TableCreator._maxLineLength">
+            <summary>
+            Contains the maximal length for the line number
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TableCreator._outputType">
+            <summary>
+            Contains the desired table type
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateTable``1(System.Collections.Generic.IEnumerable{``0},ZimLabs.TableCreator.OutputType,System.Boolean)">
+            <summary>
+            Converts the given list into a "table"
+            </summary>
+            <typeparam name="T">The type of the values</typeparam>
+            <param name="list">The list with the values</param>
+            <param name="outputType">The desired output type (optional)</param>
+            <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+            <returns></returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetAttribute(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the appearance attribute of the property
+            </summary>
+            <param name="property">The property</param>
+            <returns>The attribute</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IReadOnlyList{ZimLabs.TableCreator.DataObjects.ColumnWidth},System.Boolean,System.Int32)">
+            <summary>
+            Prints a single line
+            </summary>
+            <param name="widthList">The list with the column width</param>
+            <param name="firstLastLine">true when the first / last line should be printed</param>
+            <param name="spacer">The default spacer</param>
+            <returns>The line</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.PrintHeaderLine(System.Collections.Generic.IEnumerable{ZimLabs.TableCreator.DataObjects.ColumnWidth})">
+            <summary>
+            Prints the header line
+            </summary>
+            <param name="widthList">The list with the column width</param>
+            <returns>The header line</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IEnumerable{ZimLabs.TableCreator.DataObjects.ColumnWidth},ZimLabs.TableCreator.DataObjects.LineEntry,System.Boolean)">
+            <summary>
+            Prints a single line
+            </summary>
+            <param name="widthList">The list with the column width</param>
+            <param name="line">The line which should be printed</param>
+            <param name="header">true when the header should be printed</param>
+            <returns>The value line</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetColumnWidthList(System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Collections.Generic.IReadOnlyCollection{ZimLabs.TableCreator.DataObjects.LineEntry})">
+            <summary>
+            Gets the max length for every column
+            </summary>
+            <param name="properties">The list with the properties</param>
+            <param name="printList">The list with the print entries</param>
+            <returns>The list with the max length</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetPropertyValue(System.Object,System.String,System.String)">
+            <summary>
+            Gets the value of the property
+            </summary>
+            <param name="obj">The object which contains the data</param>
+            <param name="propertyName">The name of the property</param>
+            <param name="format">The desired format</param>
+            <returns>The property value</returns>
+        </member>
+        <member name="T:ZimLabs.TableCreator.TextAlign">
+            <summary>
+            The different align types
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Left">
+            <summary>
+            Aligns the text to the left
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Right">
+            <summary>
+            Aligns the text to the right
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Center">
+            <summary>
+            Aligns the text to the center (only available when output type is set to <see cref="F:ZimLabs.TableCreator.OutputType.Markdown"/>)
+            </summary>
+        </member>
+    </members>
+</doc>
