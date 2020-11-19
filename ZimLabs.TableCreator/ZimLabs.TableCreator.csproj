@@ -14,14 +14,16 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Removed a not needed call of a method which cause a wrong column width</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>E:\Proggen\Utility\ZimLabs.TableCreator\ZimLabs.TableCreator\ZimLabs.TableCreator.xml</DocumentationFile>
+    <DocumentationFile>ZimLabs.TableCreator.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>E:\Proggen\Utility\ZimLabs.TableCreator\ZimLabs.TableCreator\ZimLabs.TableCreator.xml</DocumentationFile>
+    <DocumentationFile>ZimLabs.TableCreator.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

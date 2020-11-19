@@ -82,9 +82,6 @@ namespace ZimLabs.TableCreator
                             GetPropertyValue(entry, property.Name, attribute.Format)));
                 }
 
-                lineEntry.Values.AddRange(
-                    properties.Select(s => new ValueEntry(s.Name, GetPropertyValue(entry, s.Name))));
-
                 printList.Add(lineEntry);
             }
 
