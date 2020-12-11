@@ -62,5 +62,5 @@ And the result looks like this:
 |   8 |  8 | Boniface   | Sperry      | bsperry7@behance.net          | Male   | 1985-05-13 |
 |   9 |  9 | Nevins     | Stear       | nstear8@aboutads.info         | Male   | 1951-04-05 |
 |  10 | 10 | Yolane     | Wadman      | ywadman9@stanford.edu         | Female | 1962-05-28 |
-|  11 | 11 | Rossy      | Eby         | rebya@tripadvisor.com         | Male   | 1966-04-15 |
++-----+----+------------+-------------+-------------------------------+--------+------------+
 ```
