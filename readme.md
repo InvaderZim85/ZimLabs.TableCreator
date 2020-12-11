@@ -7,7 +7,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 ## Install
 
 ```
-PM > Install-Package ZimLabs.TableCreator -Version
+PM > Install-Package ZimLabs.TableCreator
 ```
 
 ## Usage
@@ -31,6 +31,7 @@ public sealed class Person
 
     public string Gender { get; set; }
 
+    [Appearance(Ignore = true)]
     public string JobTitle { get; set; }
 
     // Change the format of the DateTime value
