@@ -34,7 +34,7 @@ namespace ZimLabs.TableCreator
         /// <param name="list">The list with the values</param>
         /// <param name="outputType">The desired output type (optional)</param>
         /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-        /// <returns></returns>
+        /// <returns>The created table</returns>
         public static string CreateTable<T>(IEnumerable<T> list, OutputType outputType = OutputType.Default,
             bool printLineNumbers = false) where T : class
         {
@@ -44,8 +44,11 @@ namespace ZimLabs.TableCreator
             _printLineNumbers = printLineNumbers;
             _outputType = outputType;
 
+            if (_outputType == OutputType.Csv)
+                return CreateCsv(list);
+
             // Get the properties of the given type
-            var properties = typeof(T).GetProperties();
+            var properties = typeof(T).GetProperties().RemoveIgnoredProperties();
 
             // Create the temp list
             var printList = new List<LineEntry>();
@@ -57,6 +60,7 @@ namespace ZimLabs.TableCreator
             foreach (var property in properties)
             {
                 var attribute = GetAttribute(property);
+
                 if (attribute == null || string.IsNullOrEmpty(attribute.Name))
                     headerLine.Values.Add(new ValueEntry(property.Name, property.Name));
                 else
@@ -119,6 +123,51 @@ namespace ZimLabs.TableCreator
         }
 
         /// <summary>
+        /// Creates a CSV file of the list
+        /// </summary>
+        /// <typeparam name="T">The type</typeparam>
+        /// <param name="list">The list with the values</param>
+        /// <returns>The csv file content</returns>
+        private static string CreateCsv<T>(IEnumerable<T> list)
+        {
+            var tmpList = list.Where(w => w != null).ToList();
+
+            if (!tmpList.Any())
+                return "";
+
+            var content = new StringBuilder();
+
+            // Get the properties
+            var properties = typeof(T).GetProperties().RemoveIgnoredProperties();
+
+            // Add header line
+            var headerList = new List<string>();
+            foreach (var property in properties)
+            {
+                var attribute = GetAttribute(property);
+
+                if (attribute == null || string.IsNullOrEmpty(attribute.Name))
+                    headerList.Add(property.Name);
+                else
+                    headerList.Add(attribute.Name);
+            }
+
+            content.AppendLine(string.Join(";", headerList));
+
+            // Add the content
+            foreach (var valueList in tmpList.Select(entry => (from property in properties
+                let attribute = GetAttribute(property)
+                where !(attribute?.Ignore ?? false)
+                select GetPropertyValue(entry, property.Name, attribute?.Format ?? "")).ToList()))
+            {
+                content.AppendLine(string.Join(";", valueList));
+            }
+
+            // Return the result
+            return content.ToString();
+        }
+
+        /// <summary>
         /// Gets the appearance attribute of the property
         /// </summary>
         /// <param name="property">The property</param>
@@ -148,7 +197,7 @@ namespace ZimLabs.TableCreator
                 if (_outputType == OutputType.Markdown)
                     result += $"{"-:".PadLeft(_maxLineLength + spacer, '-')}|";
                 else
-                    result += $"{"-".PadRight(_maxLineLength + spacer, '-')}|";
+                    result += $"{"-".PadRight(_maxLineLength + spacer, '-')}+";
             }
 
 
@@ -277,6 +326,19 @@ namespace ZimLabs.TableCreator
                 return null;
 
             return string.IsNullOrEmpty(format) ? value.ToString() : string.Format($"{{0:{format}}}", value);
+        }
+
+        /// <summary>
+        /// Removes the properties which should be ignored
+        /// </summary>
+        /// <param name="properties">The list with the properties</param>
+        /// <returns>The properties which should be used</returns>
+        private static List<PropertyInfo> RemoveIgnoredProperties(this PropertyInfo[] properties)
+        {
+            return (from property in properties
+                let attribute = GetAttribute(property)
+                where !(attribute?.Ignore ?? false)
+                select property).ToList();
         }
     }
 }

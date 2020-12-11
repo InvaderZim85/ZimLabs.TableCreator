@@ -21,7 +21,12 @@
         </member>
         <member name="P:ZimLabs.TableCreator.AppearanceAttribute.TextAlign">
             <summary>
-            Gets or sets the text align
+            Gets or sets the text align (will be ignored when the output type is <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.Ignore">
+            <summary>
+            Gets or sets the value which indicates if the property should be ignored. If <see langword="true"/> the other settings will be ignored.
             </summary>
         </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.ColumnWidth">
@@ -160,7 +165,15 @@
             <param name="list">The list with the values</param>
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-            <returns></returns>
+            <returns>The created table</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Creates a CSV file of the list
+            </summary>
+            <typeparam name="T">The type</typeparam>
+            <param name="list">The list with the values</param>
+            <returns>The csv file content</returns>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.GetAttribute(System.Reflection.MemberInfo)">
             <summary>
@@ -210,6 +223,13 @@
             <param name="propertyName">The name of the property</param>
             <param name="format">The desired format</param>
             <returns>The property value</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.RemoveIgnoredProperties(System.Reflection.PropertyInfo[])">
+            <summary>
+            Removes the properties which should be ignored
+            </summary>
+            <param name="properties">The list with the properties</param>
+            <returns>The properties which should be used</returns>
         </member>
         <member name="T:ZimLabs.TableCreator.TextAlign">
             <summary>

@@ -22,7 +22,7 @@ namespace Demo
             Console.ReadLine();
         }
 
-        private static List<Person> CreateDummyList()
+        private static IEnumerable<Person> CreateDummyList()
         {
             var filePath = Path.GetFullPath("MOCK_DATA.json");
 
@@ -48,6 +48,7 @@ namespace Demo
 
         public string Gender { get; set; }
 
+        [Appearance(Ignore = true)]
         public string JobTitle { get; set; }
 
         [Appearance(Format = "yyyy-MM-dd")]
