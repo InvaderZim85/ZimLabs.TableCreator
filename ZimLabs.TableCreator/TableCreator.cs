@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using ZimLabs.TableCreator.DataObjects;
 
@@ -48,7 +47,7 @@ namespace ZimLabs.TableCreator
                 return CreateCsv(list);
 
             // Get the properties of the given type
-            var properties = typeof(T).GetProperties().RemoveIgnoredProperties();
+            var properties = GetProperties<T>();
 
             // Create the temp list
             var printList = new List<LineEntry>();
@@ -59,12 +58,10 @@ namespace ZimLabs.TableCreator
             // Add the columns to the header
             foreach (var property in properties)
             {
-                var attribute = GetAttribute(property);
-
-                if (attribute == null || string.IsNullOrEmpty(attribute.Name))
+                if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Name))
                     headerLine.Values.Add(new ValueEntry(property.Name, property.Name));
                 else
-                    headerLine.Values.Add(new ValueEntry(property.Name, attribute.Name, attribute.Name));
+                    headerLine.Values.Add(new ValueEntry(property.Name, property.Appearance.Name, property.Appearance.Name));
             }
 
             printList.Add(headerLine);
@@ -77,13 +74,11 @@ namespace ZimLabs.TableCreator
 
                 foreach (var property in properties)
                 {
-                    var attribute = GetAttribute(property);
-
-                    if (attribute == null || string.IsNullOrEmpty(attribute.Format))
+                    if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Format))
                         lineEntry.Values.Add(new ValueEntry(property.Name, GetPropertyValue(entry, property.Name)));
                     else
                         lineEntry.Values.Add(new ValueEntry(property.Name,
-                            GetPropertyValue(entry, property.Name, attribute.Format)));
+                            GetPropertyValue(entry, property.Name, property.Appearance.Format)));
                 }
 
                 printList.Add(lineEntry);
@@ -138,43 +133,30 @@ namespace ZimLabs.TableCreator
             var content = new StringBuilder();
 
             // Get the properties
-            var properties = typeof(T).GetProperties().RemoveIgnoredProperties();
+            var properties = GetProperties<T>();
 
             // Add header line
             var headerList = new List<string>();
             foreach (var property in properties)
             {
-                var attribute = GetAttribute(property);
-
-                if (attribute == null || string.IsNullOrEmpty(attribute.Name))
+                if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Name))
                     headerList.Add(property.Name);
                 else
-                    headerList.Add(attribute.Name);
+                    headerList.Add(property.Appearance.Name);
             }
 
             content.AppendLine(string.Join(";", headerList));
 
             // Add the content
             foreach (var valueList in tmpList.Select(entry => (from property in properties
-                let attribute = GetAttribute(property)
-                where !(attribute?.Ignore ?? false)
-                select GetPropertyValue(entry, property.Name, attribute?.Format ?? "")).ToList()))
+                where !(property.Appearance?.Ignore ?? false)
+                select GetPropertyValue(entry, property.Name, property.Appearance?.Format ?? "")).ToList()))
             {
                 content.AppendLine(string.Join(";", valueList));
             }
 
             // Return the result
             return content.ToString();
-        }
-
-        /// <summary>
-        /// Gets the appearance attribute of the property
-        /// </summary>
-        /// <param name="property">The property</param>
-        /// <returns>The attribute</returns>
-        private static AppearanceAttribute GetAttribute(MemberInfo property)
-        {
-            return property.GetCustomAttribute<AppearanceAttribute>();
         }
 
         /// <summary>
@@ -293,14 +275,14 @@ namespace ZimLabs.TableCreator
         /// <param name="properties">The list with the properties</param>
         /// <param name="printList">The list with the print entries</param>
         /// <returns>The list with the max length</returns>
-        private static List<ColumnWidth> GetColumnWidthList(IEnumerable<PropertyInfo> properties, IReadOnlyCollection<LineEntry> printList)
+        private static List<ColumnWidth> GetColumnWidthList(IEnumerable<Property> properties, IReadOnlyCollection<LineEntry> printList)
         {
             return (from property in properties
                     let maxValue = printList.SelectMany(s => s.Values)
                         .Where(w => w.ColumnName.Equals(property.Name))
                         .Max(m => m.Value.Length)
-                    let attribute = GetAttribute(property)
-                    select new ColumnWidth(property.Name, maxValue, attribute?.TextAlign ?? TextAlign.Left)).ToList();
+                    select new ColumnWidth(property.Name, maxValue, property.Appearance?.TextAlign ?? TextAlign.Left))
+                .ToList();
         }
 
         /// <summary>
@@ -323,22 +305,21 @@ namespace ZimLabs.TableCreator
                 : obj.GetType().GetProperty(propertyName)?.GetValue(obj, null);
 
             if (value == null)
-                return null;
+                return "";
 
             return string.IsNullOrEmpty(format) ? value.ToString() : string.Format($"{{0:{format}}}", value);
         }
-
+        
         /// <summary>
-        /// Removes the properties which should be ignored
+        /// Gets all properties of the specified type
         /// </summary>
-        /// <param name="properties">The list with the properties</param>
-        /// <returns>The properties which should be used</returns>
-        private static List<PropertyInfo> RemoveIgnoredProperties(this PropertyInfo[] properties)
+        /// <typeparam name="T">The type</typeparam>
+        /// <returns>The list with the properties</returns>
+        private static IReadOnlyCollection<Property> GetProperties<T>()
         {
-            return (from property in properties
-                let attribute = GetAttribute(property)
-                where !(attribute?.Ignore ?? false)
-                select property).ToList();
+            var properties = typeof(T).GetProperties();
+            return properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
+
         }
     }
 }

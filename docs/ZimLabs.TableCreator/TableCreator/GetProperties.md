@@ -1,21 +1,22 @@
-# TableCreator.RemoveIgnoredProperties method
+# TableCreator.GetProperties&lt;T&gt; method
 
-Removes the properties which should be ignored
+Gets all properties of the specified type
 
 ```csharp
-private static List<PropertyInfo> RemoveIgnoredProperties(this PropertyInfo[] properties)
+private static IReadOnlyCollection<Property> GetProperties<T>()
 ```
 
 | parameter | description |
 | --- | --- |
-| properties | The list with the properties |
+| T | The type |
 
 ## Return Value
 
-The properties which should be used
+The list with the properties
 
 ## See Also
 
+* class [Property](../../ZimLabs.TableCreator.DataObjects/Property.md)
 * class [TableCreator](../TableCreator.md)
 * namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
 
