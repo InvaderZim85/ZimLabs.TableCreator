@@ -14,8 +14,9 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.2</Version>
-    <PackageReleaseNotes>Update of the line endings (replaced the pipe with a plus)</PackageReleaseNotes>
+    <Version>1.2.0</Version>
+    <PackageReleaseNotes>- Added new method to save the created table into a file
+- Convert the methods to an extension method</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

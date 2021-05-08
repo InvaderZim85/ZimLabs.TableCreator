@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ZimLabs.TableCreator.DataObjects;
@@ -34,7 +35,7 @@ namespace ZimLabs.TableCreator
         /// <param name="outputType">The desired output type (optional)</param>
         /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
         /// <returns>The created table</returns>
-        public static string CreateTable<T>(IEnumerable<T> list, OutputType outputType = OutputType.Default,
+        public static string CreateTable<T>(this IEnumerable<T> list, OutputType outputType = OutputType.Default,
             bool printLineNumbers = false) where T : class
         {
             if (list == null)
@@ -115,6 +116,39 @@ namespace ZimLabs.TableCreator
                 result.AppendLine(PrintLine(widthList));
 
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Converts the given list into a "table" and save it into the specified file
+        /// </summary>
+        /// <typeparam name="T">THe type of the values</typeparam>
+        /// <param name="list">The list with the values</param>
+        /// <param name="filepath">The path of the destination file</param>
+        /// <param name="outputType">The desired output type (optional)</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        public static void SaveTable<T>(this IEnumerable<T> list, string filepath,
+            OutputType outputType = OutputType.Default,
+            bool printLineNumbers = false) where T : class
+        {
+            list.SaveTable(filepath, Encoding.UTF8, outputType, printLineNumbers);
+        }
+
+        /// <summary>
+        /// Converts the given list into a "table" and save it into the specified file
+        /// </summary>
+        /// <typeparam name="T">THe type of the values</typeparam>
+        /// <param name="list">The list with the values</param>
+        /// <param name="filepath">The path of the destination file</param>
+        /// <param name="encoding">The encoding of the file</param>
+        /// <param name="outputType">The desired output type (optional)</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        public static void SaveTable<T>(this IEnumerable<T> list, string filepath, Encoding encoding,
+            OutputType outputType = OutputType.Default,
+            bool printLineNumbers = false) where T : class
+        {
+            var result = CreateTable(list, outputType, printLineNumbers);
+
+            File.WriteAllText(filepath, result, encoding);
         }
 
         /// <summary>

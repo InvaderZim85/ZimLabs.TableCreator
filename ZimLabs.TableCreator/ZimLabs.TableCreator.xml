@@ -193,6 +193,27 @@
             <param name="printLineNumbers">true to print line numbers, otherwise false</param>
             <returns>The created table</returns>
         </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,ZimLabs.TableCreator.OutputType,System.Boolean)">
+            <summary>
+            Converts the given list into a "table" and save it into the specified file
+            </summary>
+            <typeparam name="T">THe type of the values</typeparam>
+            <param name="list">The list with the values</param>
+            <param name="filepath">The path of the destination file</param>
+            <param name="outputType">The desired output type (optional)</param>
+            <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean)">
+            <summary>
+            Converts the given list into a "table" and save it into the specified file
+            </summary>
+            <typeparam name="T">THe type of the values</typeparam>
+            <param name="list">The list with the values</param>
+            <param name="filepath">The path of the destination file</param>
+            <param name="encoding">The encoding of the file</param>
+            <param name="outputType">The desired output type (optional)</param>
+            <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Creates a CSV file of the list

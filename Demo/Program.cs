@@ -13,7 +13,7 @@ namespace Demo
         {
             var data = CreateErrorList();
 
-            var tableString = TableCreator.CreateTable(data, OutputType.Default, true);
+            var tableString = data.CreateTable(OutputType.Markdown, true);
 
             Console.WriteLine(tableString);
 

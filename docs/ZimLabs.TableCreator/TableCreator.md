@@ -11,6 +11,7 @@ public static class TableCreator
 | name | description |
 | --- | --- |
 | static [CreateTable&lt;T&gt;](TableCreator/CreateTable.md)(…) | Converts the given list into a "table" |
+| static [SaveTable&lt;T&gt;](TableCreator/SaveTable.md)(…) | Converts the given list into a "table" and save it into the specified file (2 methods) |
 
 ## Private Members
 

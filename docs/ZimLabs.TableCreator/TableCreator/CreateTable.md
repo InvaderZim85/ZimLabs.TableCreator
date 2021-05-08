@@ -3,7 +3,7 @@
 Converts the given list into a "table"
 
 ```csharp
-public static string CreateTable<T>(IEnumerable<T> list, 
+public static string CreateTable<T>(this IEnumerable<T> list, 
     OutputType outputType = OutputType.Default, bool printLineNumbers = false)
     where T : class
 ```
