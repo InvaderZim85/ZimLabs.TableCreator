@@ -19,8 +19,13 @@ namespace ZimLabs.TableCreator
         public string Format { get; set; }
 
         /// <summary>
-        /// Gets or sets the text align
+        /// Gets or sets the text align (will be ignored when the output type is <see cref="OutputType.Csv"/>)
         /// </summary>
         public TextAlign TextAlign { get; set; } = TextAlign.Left;
+
+        /// <summary>
+        /// Gets or sets the value which indicates if the property should be ignored. If <see langword="true"/> the other settings will be ignored.
+        /// </summary>
+        public bool Ignore { get; set; }
     }
 }

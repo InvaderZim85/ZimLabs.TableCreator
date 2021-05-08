@@ -3,7 +3,7 @@
 Gets the max length for every column
 
 ```csharp
-private static List<ColumnWidth> GetColumnWidthList(IEnumerable<PropertyInfo> properties, 
+private static List<ColumnWidth> GetColumnWidthList(IEnumerable<Property> properties, 
     IReadOnlyCollection<LineEntry> printList)
 ```
 
@@ -19,6 +19,7 @@ The list with the max length
 ## See Also
 
 * class [ColumnWidth](../../ZimLabs.TableCreator.DataObjects/ColumnWidth.md)
+* class [Property](../../ZimLabs.TableCreator.DataObjects/Property.md)
 * class [LineEntry](../../ZimLabs.TableCreator.DataObjects/LineEntry.md)
 * class [TableCreator](../TableCreator.md)
 * namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)

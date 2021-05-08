@@ -1,14 +1,13 @@
-# AppearanceAttribute.TextAlign property
+# AppearanceAttribute.Ignore property
 
-Gets or sets the text align (will be ignored when the output type is Csv)
+Gets or sets the value which indicates if the property should be ignored. If `true` the other settings will be ignored.
 
 ```csharp
-public TextAlign TextAlign { get; set; }
+public bool Ignore { get; set; }
 ```
 
 ## See Also
 
-* enum [TextAlign](../TextAlign.md)
 * class [AppearanceAttribute](../AppearanceAttribute.md)
 * namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
 

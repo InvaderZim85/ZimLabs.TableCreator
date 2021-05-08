@@ -11,7 +11,7 @@ namespace Demo
     {
         private static void Main()
         {
-            var data = CreateDummyList();
+            var data = CreateErrorList();
 
             var tableString = TableCreator.CreateTable(data, OutputType.Default, true);
 
@@ -22,13 +22,27 @@ namespace Demo
             Console.ReadLine();
         }
 
-        private static List<Person> CreateDummyList()
+        private static IEnumerable<Person> CreateDummyList()
         {
             var filePath = Path.GetFullPath("MOCK_DATA.json");
 
             var content = File.ReadAllText(filePath, Encoding.UTF8);
 
             return JsonConvert.DeserializeObject<List<Person>>(content);
+        }
+
+        public static IReadOnlyCollection<Person> CreateErrorList()
+        {
+            return new List<Person>
+            {
+                new Person
+                {
+                    Id = 1,
+                    Name = "Andreas",
+                    Mail = "Test@test.mail",
+                    Birthday = new DateTime(1985, 7, 12)
+                }
+            };
         }
     }
 
@@ -48,6 +62,7 @@ namespace Demo
 
         public string Gender { get; set; }
 
+        [Appearance(Ignore = true)]
         public string JobTitle { get; set; }
 
         [Appearance(Format = "yyyy-MM-dd")]

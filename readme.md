@@ -7,7 +7,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 ## Install
 
 ```
-PM > Install-Package ZimLabs.TableCreator -Version
+PM > Install-Package ZimLabs.TableCreator
 ```
 
 ## Usage
@@ -31,6 +31,7 @@ public sealed class Person
 
     public string Gender { get; set; }
 
+    [Appearance(Ignore = true)]
     public string JobTitle { get; set; }
 
     // Change the format of the DateTime value
@@ -48,17 +49,18 @@ var result = TableCreator.CreateTable(tempList, OutputType.Default, true);
 And the result looks like this:
 
 ```
-+-----|----+------------+-------------+-------------------------------+--------+-------------------------------+---------------------+
-| Row | Id | First name | Last name   | E-Mail                        | Gender | JobTitle                      | Birthday            |
-|-----|----+------------+-------------+-------------------------------+--------+-------------------------------+---------------------|
-|   1 |  1 | Tommy      | Giblin      | tgiblin0@amazon.co.uk         | Female | Environmental Tech            | 1968-03-26          |
-|   2 |  2 | Sven       | Puden       | spuden1@soundcloud.com        | Male   | Teacher                       | 1952-04-24          |
-|   3 |  3 | Garvy      | Czaple      | gczaple2@com.com              | Male   | VP Quality Control            | 1965-04-10          |
-|   4 |  4 | Eryn       | Mariotte    | emariotte3@issuu.com          | Female | Pharmacist                    | 1986-07-23          |
-|   5 |  5 | Zaccaria   | Oiseau      | zoiseau4@huffingtonpost.com   | Male   | Senior Financial Analyst      | 1967-11-09          |
-|   6 |  6 | Conny      | Di Batista  | cdibatista5@mysql.com         | Male   | Data Coordiator               | 1997-12-27          |
-|   7 |  7 | Toma       | Tristram    | ttristram6@mashable.com       | Female | Human Resources Assistant I   | 1960-02-15          |
-|   8 |  8 | Boniface   | Sperry      | bsperry7@behance.net          | Male   | Financial Advisor             | 1985-05-13          |
-|   9 |  9 | Nevins     | Stear       | nstear8@aboutads.info         | Male   | Analog Circuit Design manager | 1951-04-05          |
-|  10 | 10 | Yolane     | Wadman      | ywadman9@stanford.edu         | Female | VP Marketing                  | 1962-05-28          |
++-----+----+------------+-------------+-------------------------------+--------+------------+
+| Row | Id | First name | Last name   | E-Mail                        | Gender | Birthday   |
+|-----+----+------------+-------------+-------------------------------+--------+------------|
+|   1 |  1 | Tommy      | Giblin      | tgiblin0@amazon.co.uk         | Female | 1968-03-26 |
+|   2 |  2 | Sven       | Puden       | spuden1@soundcloud.com        | Male   | 1952-04-24 |
+|   3 |  3 | Garvy      | Czaple      | gczaple2@com.com              | Male   | 1965-04-10 |
+|   4 |  4 | Eryn       | Mariotte    | emariotte3@issuu.com          | Female | 1986-07-23 |
+|   5 |  5 | Zaccaria   | Oiseau      | zoiseau4@huffingtonpost.com   | Male   | 1967-11-09 |
+|   6 |  6 | Conny      | Di Batista  | cdibatista5@mysql.com         | Male   | 1997-12-27 |
+|   7 |  7 | Toma       | Tristram    | ttristram6@mashable.com       | Female | 1960-02-15 |
+|   8 |  8 | Boniface   | Sperry      | bsperry7@behance.net          | Male   | 1985-05-13 |
+|   9 |  9 | Nevins     | Stear       | nstear8@aboutads.info         | Male   | 1951-04-05 |
+|  10 | 10 | Yolane     | Wadman      | ywadman9@stanford.edu         | Female | 1962-05-28 |
++-----+----+------------+-------------+-------------------------------+--------+------------+
 ```

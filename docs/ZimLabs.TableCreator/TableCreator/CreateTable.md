@@ -15,6 +15,10 @@ public static string CreateTable<T>(IEnumerable<T> list,
 | outputType | The desired output type (optional) |
 | printLineNumbers | true to print line numbers, otherwise false |
 
+## Return Value
+
+The created table
+
 ## See Also
 
 * enum [OutputType](../OutputType.md)

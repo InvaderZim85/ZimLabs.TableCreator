@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using ZimLabs.TableCreator.DataObjects;
 
@@ -34,7 +33,7 @@ namespace ZimLabs.TableCreator
         /// <param name="list">The list with the values</param>
         /// <param name="outputType">The desired output type (optional)</param>
         /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-        /// <returns></returns>
+        /// <returns>The created table</returns>
         public static string CreateTable<T>(IEnumerable<T> list, OutputType outputType = OutputType.Default,
             bool printLineNumbers = false) where T : class
         {
@@ -44,8 +43,11 @@ namespace ZimLabs.TableCreator
             _printLineNumbers = printLineNumbers;
             _outputType = outputType;
 
+            if (_outputType == OutputType.Csv)
+                return CreateCsv(list);
+
             // Get the properties of the given type
-            var properties = typeof(T).GetProperties();
+            var properties = GetProperties<T>();
 
             // Create the temp list
             var printList = new List<LineEntry>();
@@ -56,11 +58,10 @@ namespace ZimLabs.TableCreator
             // Add the columns to the header
             foreach (var property in properties)
             {
-                var attribute = GetAttribute(property);
-                if (attribute == null || string.IsNullOrEmpty(attribute.Name))
+                if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Name))
                     headerLine.Values.Add(new ValueEntry(property.Name, property.Name));
                 else
-                    headerLine.Values.Add(new ValueEntry(property.Name, attribute.Name, attribute.Name));
+                    headerLine.Values.Add(new ValueEntry(property.Name, property.Appearance.Name, property.Appearance.Name));
             }
 
             printList.Add(headerLine);
@@ -73,17 +74,12 @@ namespace ZimLabs.TableCreator
 
                 foreach (var property in properties)
                 {
-                    var attribute = GetAttribute(property);
-
-                    if (attribute == null || string.IsNullOrEmpty(attribute.Format))
+                    if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Format))
                         lineEntry.Values.Add(new ValueEntry(property.Name, GetPropertyValue(entry, property.Name)));
                     else
                         lineEntry.Values.Add(new ValueEntry(property.Name,
-                            GetPropertyValue(entry, property.Name, attribute.Format)));
+                            GetPropertyValue(entry, property.Name, property.Appearance.Format)));
                 }
-
-                lineEntry.Values.AddRange(
-                    properties.Select(s => new ValueEntry(s.Name, GetPropertyValue(entry, s.Name))));
 
                 printList.Add(lineEntry);
             }
@@ -122,13 +118,45 @@ namespace ZimLabs.TableCreator
         }
 
         /// <summary>
-        /// Gets the appearance attribute of the property
+        /// Creates a CSV file of the list
         /// </summary>
-        /// <param name="property">The property</param>
-        /// <returns>The attribute</returns>
-        private static AppearanceAttribute GetAttribute(MemberInfo property)
+        /// <typeparam name="T">The type</typeparam>
+        /// <param name="list">The list with the values</param>
+        /// <returns>The csv file content</returns>
+        private static string CreateCsv<T>(IEnumerable<T> list)
         {
-            return property.GetCustomAttribute<AppearanceAttribute>();
+            var tmpList = list.Where(w => w != null).ToList();
+
+            if (!tmpList.Any())
+                return "";
+
+            var content = new StringBuilder();
+
+            // Get the properties
+            var properties = GetProperties<T>();
+
+            // Add header line
+            var headerList = new List<string>();
+            foreach (var property in properties)
+            {
+                if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Name))
+                    headerList.Add(property.Name);
+                else
+                    headerList.Add(property.Appearance.Name);
+            }
+
+            content.AppendLine(string.Join(";", headerList));
+
+            // Add the content
+            foreach (var valueList in tmpList.Select(entry => (from property in properties
+                where !(property.Appearance?.Ignore ?? false)
+                select GetPropertyValue(entry, property.Name, property.Appearance?.Format ?? "")).ToList()))
+            {
+                content.AppendLine(string.Join(";", valueList));
+            }
+
+            // Return the result
+            return content.ToString();
         }
 
         /// <summary>
@@ -246,14 +274,14 @@ namespace ZimLabs.TableCreator
         /// <param name="properties">The list with the properties</param>
         /// <param name="printList">The list with the print entries</param>
         /// <returns>The list with the max length</returns>
-        private static List<ColumnWidth> GetColumnWidthList(IEnumerable<PropertyInfo> properties, IReadOnlyCollection<LineEntry> printList)
+        private static List<ColumnWidth> GetColumnWidthList(IEnumerable<Property> properties, IReadOnlyCollection<LineEntry> printList)
         {
             return (from property in properties
                     let maxValue = printList.SelectMany(s => s.Values)
                         .Where(w => w.ColumnName.Equals(property.Name))
                         .Max(m => m.Value.Length)
-                    let attribute = GetAttribute(property)
-                    select new ColumnWidth(property.Name, maxValue, attribute?.TextAlign ?? TextAlign.Left)).ToList();
+                    select new ColumnWidth(property.Name, maxValue, property.Appearance?.TextAlign ?? TextAlign.Left))
+                .ToList();
         }
 
         /// <summary>
@@ -276,9 +304,21 @@ namespace ZimLabs.TableCreator
                 : obj.GetType().GetProperty(propertyName)?.GetValue(obj, null);
 
             if (value == null)
-                return null;
+                return "";
 
             return string.IsNullOrEmpty(format) ? value.ToString() : string.Format($"{{0:{format}}}", value);
+        }
+        
+        /// <summary>
+        /// Gets all properties of the specified type
+        /// </summary>
+        /// <typeparam name="T">The type</typeparam>
+        /// <returns>The list with the properties</returns>
+        private static IReadOnlyCollection<Property> GetProperties<T>()
+        {
+            var properties = typeof(T).GetProperties();
+            return properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
+
         }
     }
 }

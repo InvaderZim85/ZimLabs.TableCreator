@@ -1,22 +1,22 @@
-# TableCreator.GetAttribute method
+# TableCreator.CreateCsv&lt;T&gt; method
 
-Gets the appearance attribute of the property
+Creates a CSV file of the list
 
 ```csharp
-private static AppearanceAttribute GetAttribute(MemberInfo property)
+private static string CreateCsv<T>(IEnumerable<T> list)
 ```
 
 | parameter | description |
 | --- | --- |
-| property | The property |
+| T | The type |
+| list | The list with the values |
 
 ## Return Value
 
-The attribute
+The csv file content
 
 ## See Also
 
-* class [AppearanceAttribute](../AppearanceAttribute.md)
 * class [TableCreator](../TableCreator.md)
 * namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
 

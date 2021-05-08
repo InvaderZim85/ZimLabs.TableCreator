@@ -20,8 +20,9 @@ public static class TableCreator
 | static [_maxLineLength](TableCreator/_maxLineLength.md) | Contains the maximal length for the line number |
 | static [_outputType](TableCreator/_outputType.md) | Contains the desired table type |
 | static [_printLineNumbers](TableCreator/_printLineNumbers.md) | Contains the value which indicates if the line numbers should be printed |
-| static [GetAttribute](TableCreator/GetAttribute.md)(…) | Gets the appearance attribute of the property |
+| static [CreateCsv&lt;T&gt;](TableCreator/CreateCsv.md)(…) | Creates a CSV file of the list |
 | static [GetColumnWidthList](TableCreator/GetColumnWidthList.md)(…) | Gets the max length for every column |
+| static [GetProperties&lt;T&gt;](TableCreator/GetProperties.md)() | Gets all properties of the specified type |
 | static [GetPropertyValue](TableCreator/GetPropertyValue.md)(…) | Gets the value of the property |
 | static [PrintHeaderLine](TableCreator/PrintHeaderLine.md)(…) | Prints the header line |
 | static [PrintLine](TableCreator/PrintLine.md)(…) | Prints a single line (2 methods) |

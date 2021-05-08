@@ -21,7 +21,12 @@
         </member>
         <member name="P:ZimLabs.TableCreator.AppearanceAttribute.TextAlign">
             <summary>
-            Gets or sets the text align
+            Gets or sets the text align (will be ignored when the output type is <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.Ignore">
+            <summary>
+            Gets or sets the value which indicates if the property should be ignored. If <see langword="true"/> the other settings will be ignored.
             </summary>
         </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.ColumnWidth">
@@ -78,6 +83,32 @@
             </summary>
             <param name="id">The id of the entry</param>
             <param name="isHeader">The value which indicates if the line represents the header (optional)</param>
+        </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.Property">
+            <summary>
+            Represents the information about a property
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.Property.Name">
+            <summary>
+            Gets or sets the name of the property
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.Property.Appearance">
+            <summary>
+            Gets or sets the appearance
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.Property.Ignore">
+            <summary>
+            Gets the value which indicates if the property should be ignored
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.Property.op_Explicit(System.Reflection.PropertyInfo)~ZimLabs.TableCreator.DataObjects.Property">
+            <summary>
+            Converts a <see cref="T:System.Reflection.PropertyInfo"/> into a <see cref="T:ZimLabs.TableCreator.DataObjects.Property"/>
+            </summary>
+            <param name="prop">The original property</param>
         </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.ValueEntry">
             <summary>
@@ -160,14 +191,15 @@
             <param name="list">The list with the values</param>
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-            <returns></returns>
+            <returns>The created table</returns>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.GetAttribute(System.Reflection.MemberInfo)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0})">
             <summary>
-            Gets the appearance attribute of the property
+            Creates a CSV file of the list
             </summary>
-            <param name="property">The property</param>
-            <returns>The attribute</returns>
+            <typeparam name="T">The type</typeparam>
+            <param name="list">The list with the values</param>
+            <returns>The csv file content</returns>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IReadOnlyList{ZimLabs.TableCreator.DataObjects.ColumnWidth},System.Int32)">
             <summary>
@@ -193,7 +225,7 @@
             <param name="header">true when the header should be printed</param>
             <returns>The value line</returns>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.GetColumnWidthList(System.Collections.Generic.IEnumerable{System.Reflection.PropertyInfo},System.Collections.Generic.IReadOnlyCollection{ZimLabs.TableCreator.DataObjects.LineEntry})">
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetColumnWidthList(System.Collections.Generic.IEnumerable{ZimLabs.TableCreator.DataObjects.Property},System.Collections.Generic.IReadOnlyCollection{ZimLabs.TableCreator.DataObjects.LineEntry})">
             <summary>
             Gets the max length for every column
             </summary>
@@ -209,6 +241,13 @@
             <param name="propertyName">The name of the property</param>
             <param name="format">The desired format</param>
             <returns>The property value</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetProperties``1">
+            <summary>
+            Gets all properties of the specified type
+            </summary>
+            <typeparam name="T">The type</typeparam>
+            <returns>The list with the properties</returns>
         </member>
         <member name="T:ZimLabs.TableCreator.TextAlign">
             <summary>
