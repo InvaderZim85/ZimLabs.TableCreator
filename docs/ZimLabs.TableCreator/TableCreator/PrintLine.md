@@ -3,6 +3,31 @@
 Prints a single line
 
 ```csharp
+private static string PrintLine(IReadOnlyList<ColumnWidth> widthList, int spacer = 2)
+```
+
+| parameter | description |
+| --- | --- |
+| widthList | The list with the column width |
+| spacer | The default spacer |
+
+## Return Value
+
+The line
+
+## See Also
+
+* class [ColumnWidth](../../ZimLabs.TableCreator.DataObjects/ColumnWidth.md)
+* class [TableCreator](../TableCreator.md)
+* namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
+
+---
+
+# TableCreator.PrintLine method (2 of 2)
+
+Prints a single line
+
+```csharp
 private static string PrintLine(IEnumerable<ColumnWidth> widthList, LineEntry line, bool header)
 ```
 
@@ -20,33 +45,6 @@ The value line
 
 * class [ColumnWidth](../../ZimLabs.TableCreator.DataObjects/ColumnWidth.md)
 * class [LineEntry](../../ZimLabs.TableCreator.DataObjects/LineEntry.md)
-* class [TableCreator](../TableCreator.md)
-* namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
-
----
-
-# TableCreator.PrintLine method (2 of 2)
-
-Prints a single line
-
-```csharp
-private static string PrintLine(IReadOnlyList<ColumnWidth> widthList, bool firstLastLine, 
-    int spacer = 2)
-```
-
-| parameter | description |
-| --- | --- |
-| widthList | The list with the column width |
-| firstLastLine | true when the first / last line should be printed |
-| spacer | The default spacer |
-
-## Return Value
-
-The line
-
-## See Also
-
-* class [ColumnWidth](../../ZimLabs.TableCreator.DataObjects/ColumnWidth.md)
 * class [TableCreator](../TableCreator.md)
 * namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
 

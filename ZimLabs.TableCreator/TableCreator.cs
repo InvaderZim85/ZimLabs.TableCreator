@@ -99,14 +99,14 @@ namespace ZimLabs.TableCreator
 
             // Print the first line (if the default type is chosen)
             if (_outputType == OutputType.Default)
-                result.AppendLine(PrintLine(widthList, true));
+                result.AppendLine(PrintLine(widthList));
 
             // Print the column header
             var header = printList.FirstOrDefault(f => f.IsHeader);
             result.AppendLine(header != null ? PrintLine(widthList, header, true) : PrintHeaderLine(widthList));
 
             // Print the separator line (if the default type is chosen)
-            result.AppendLine(PrintLine(widthList, false));
+            result.AppendLine(PrintLine(widthList));
 
             // Print the values
             foreach (var line in printList.Where(w => !w.IsHeader).OrderBy(o => o.Id))
@@ -116,7 +116,7 @@ namespace ZimLabs.TableCreator
 
             // Print the footer (if the default type is chosen)
             if (_outputType == OutputType.Default)
-                result.AppendLine(PrintLine(widthList, true));
+                result.AppendLine(PrintLine(widthList));
 
             return result.ToString();
         }
@@ -135,12 +135,11 @@ namespace ZimLabs.TableCreator
         /// Prints a single line
         /// </summary>
         /// <param name="widthList">The list with the column width</param>
-        /// <param name="firstLastLine">true when the first / last line should be printed</param>
         /// <param name="spacer">The default spacer</param>
         /// <returns>The line</returns>
-        private static string PrintLine(IReadOnlyList<ColumnWidth> widthList, bool firstLastLine, int spacer = 2)
+        private static string PrintLine(IReadOnlyList<ColumnWidth> widthList, int spacer = 2)
         {
-            var lineStartEnd = firstLastLine ? "+" : "|";
+            var lineStartEnd = "+";
             if (_outputType == OutputType.Markdown)
                 lineStartEnd = "|";
 
@@ -151,7 +150,7 @@ namespace ZimLabs.TableCreator
                 if (_outputType == OutputType.Markdown)
                     result += $"{"-:".PadLeft(_maxLineLength + spacer, '-')}|";
                 else
-                    result += $"{"-".PadRight(_maxLineLength + spacer, '-')}|";
+                    result += $"{"-".PadRight(_maxLineLength + spacer, '-')}+";
             }
 
 

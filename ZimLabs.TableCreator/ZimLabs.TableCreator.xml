@@ -169,12 +169,11 @@
             <param name="property">The property</param>
             <returns>The attribute</returns>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IReadOnlyList{ZimLabs.TableCreator.DataObjects.ColumnWidth},System.Boolean,System.Int32)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IReadOnlyList{ZimLabs.TableCreator.DataObjects.ColumnWidth},System.Int32)">
             <summary>
             Prints a single line
             </summary>
             <param name="widthList">The list with the column width</param>
-            <param name="firstLastLine">true when the first / last line should be printed</param>
             <param name="spacer">The default spacer</param>
             <returns>The line</returns>
         </member>
