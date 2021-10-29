@@ -3,13 +3,15 @@
 Creates a CSV file of the list
 
 ```csharp
-private static string CreateCsv<T>(IEnumerable<T> list)
+private static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers)
 ```
 
 | parameter | description |
 | --- | --- |
 | T | The type |
 | list | The list with the values |
+| delimiter | The delimiter which should be used for CSV |
+| printLineNumbers | true to print line numbers, otherwise false |
 
 ## Return Value
 

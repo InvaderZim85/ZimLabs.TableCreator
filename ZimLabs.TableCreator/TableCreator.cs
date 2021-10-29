@@ -33,10 +33,11 @@ namespace ZimLabs.TableCreator
         /// <typeparam name="T">The type of the values</typeparam>
         /// <param name="list">The list with the values</param>
         /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
         /// <returns>The created table</returns>
         public static string CreateTable<T>(this IEnumerable<T> list, OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false) where T : class
+            bool printLineNumbers = false, string delimiter = ";") where T : class
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
@@ -45,7 +46,7 @@ namespace ZimLabs.TableCreator
             _outputType = outputType;
 
             if (_outputType == OutputType.Csv)
-                return CreateCsv(list);
+                return CreateCsv(list, delimiter, printLineNumbers);
 
             // Get the properties of the given type
             var properties = GetProperties<T>();
@@ -121,16 +122,17 @@ namespace ZimLabs.TableCreator
         /// <summary>
         /// Converts the given list into a "table" and save it into the specified file
         /// </summary>
-        /// <typeparam name="T">THe type of the values</typeparam>
+        /// <typeparam name="T">The type of the values</typeparam>
         /// <param name="list">The list with the values</param>
         /// <param name="filepath">The path of the destination file</param>
         /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
         public static void SaveTable<T>(this IEnumerable<T> list, string filepath,
             OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false) where T : class
+            bool printLineNumbers = false, string delimiter = ";") where T : class
         {
-            list.SaveTable(filepath, Encoding.UTF8, outputType, printLineNumbers);
+            list.SaveTable(filepath, Encoding.UTF8, outputType, printLineNumbers, delimiter);
         }
 
         /// <summary>
@@ -141,12 +143,13 @@ namespace ZimLabs.TableCreator
         /// <param name="filepath">The path of the destination file</param>
         /// <param name="encoding">The encoding of the file</param>
         /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
         public static void SaveTable<T>(this IEnumerable<T> list, string filepath, Encoding encoding,
             OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false) where T : class
+            bool printLineNumbers = false, string delimiter = ";") where T : class
         {
-            var result = CreateTable(list, outputType, printLineNumbers);
+            var result = CreateTable(list, outputType, printLineNumbers, delimiter);
 
             File.WriteAllText(filepath, result, encoding);
         }
@@ -156,8 +159,10 @@ namespace ZimLabs.TableCreator
         /// </summary>
         /// <typeparam name="T">The type</typeparam>
         /// <param name="list">The list with the values</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
         /// <returns>The csv file content</returns>
-        private static string CreateCsv<T>(IEnumerable<T> list)
+        private static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers)
         {
             var tmpList = list.Where(w => w != null).ToList();
 
@@ -171,6 +176,8 @@ namespace ZimLabs.TableCreator
 
             // Add header line
             var headerList = new List<string>();
+            if (printLineNumbers)
+                headerList.Add("Row");
             foreach (var property in properties)
             {
                 if (property.Appearance == null || string.IsNullOrEmpty(property.Appearance.Name))
@@ -179,14 +186,20 @@ namespace ZimLabs.TableCreator
                     headerList.Add(property.Appearance.Name);
             }
 
-            content.AppendLine(string.Join(";", headerList));
+            content.AppendLine(string.Join(delimiter, headerList));
 
             // Add the content
+            var rowCount = 1;
             foreach (var valueList in tmpList.Select(entry => (from property in properties
                 where !(property.Appearance?.Ignore ?? false)
                 select GetPropertyValue(entry, property.Name, property.Appearance?.Format ?? "")).ToList()))
             {
-                content.AppendLine(string.Join(";", valueList));
+                if (printLineNumbers)
+                    valueList.Insert(0, rowCount.ToString());
+
+                content.AppendLine(string.Join(delimiter, valueList));
+
+                rowCount++;
             }
 
             // Return the result

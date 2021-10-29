@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using ZimLabs.TableCreator;
@@ -11,9 +12,9 @@ namespace Demo
     {
         private static void Main()
         {
-            var data = CreateErrorList();
+            var data = CreateDummyList().OrderByDescending(o => o.Id);
 
-            var tableString = data.CreateTable(OutputType.Markdown, true);
+            var tableString = data.CreateTable(OutputType.Csv, true);
 
             Console.WriteLine(tableString);
 

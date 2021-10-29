@@ -14,9 +14,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.0</Version>
-    <PackageReleaseNotes>- Added new method to save the created table into a file
-- Convert the methods to an extension method</PackageReleaseNotes>
+    <Version>1.2.1</Version>
+    <PackageReleaseNotes>- Added the option to change the delimiter of CSV and add the row number</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
