@@ -58,16 +58,15 @@ namespace Demo
         [Appearance(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Appearance(Name = "E-Mail", Order = 3)]
+        [Appearance(Name = "E-Mail")]
         public string Mail { get; set; }
 
         [Appearance(Ignore = true)]
         public string Gender { get; set; }
 
-        [Appearance(Order = 2)]
         public string JobTitle { get; set; }
 
-        [Appearance(Format = "yyyy-MM-dd", Order = 1)]
+        [Appearance(Format = "yyyy-MM-dd")]
         public DateTime Birthday { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace ZimLabs.TableCreator.DataObjects
         /// <summary>
         /// Gets the order value of the property
         /// </summary>
-        public int Order => Appearance?.Order ?? 0;
+        public int Order => Appearance?.Order ?? -1;
 
         /// <summary>
         /// Creates a new instance of the <see cref="Property"/>
