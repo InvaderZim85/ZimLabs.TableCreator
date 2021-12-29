@@ -365,11 +365,8 @@ namespace ZimLabs.TableCreator
         {
             var properties = typeof(T).GetProperties();
             var values = properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
-
-            if (values.Where(w => !w.Ignore).All(a => a.Order != -1))
-                values = values.OrderBy(o => o.Order).ToList();
-
-            return values;
+            
+            return values.OrderBy(o => o.Order).ToList();
         }
     }
 }

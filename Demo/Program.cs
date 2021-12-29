@@ -49,7 +49,7 @@ namespace Demo
 
     internal sealed class Person
     {
-        //[Appearance(TextAlign = TextAlign.Right, Order = 4)]
+        [Appearance(TextAlign = TextAlign.Right)]
         public int Id { get; set; }
 
         [Appearance(Name = "First name")]
@@ -58,15 +58,16 @@ namespace Demo
         [Appearance(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Appearance(Name = "E-Mail")]
+        [Appearance(Name = "E-Mail", Order = 3)]
         public string Mail { get; set; }
 
+        [Appearance(Ignore = true)]
         public string Gender { get; set; }
 
-        [Appearance(Ignore = true)]
+        [Appearance(Order = 2)]
         public string JobTitle { get; set; }
 
-        [Appearance(Format = "yyyy-MM-dd")]
+        [Appearance(Format = "yyyy-MM-dd", Order = 1)]
         public DateTime Birthday { get; set; }
     }
 }
