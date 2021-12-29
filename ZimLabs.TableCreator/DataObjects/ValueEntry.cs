@@ -1,4 +1,6 @@
-﻿namespace ZimLabs.TableCreator.DataObjects
+﻿using System.Diagnostics;
+
+namespace ZimLabs.TableCreator.DataObjects
 {
     /// <summary>
     /// Represents a single value

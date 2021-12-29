@@ -27,5 +27,12 @@ namespace ZimLabs.TableCreator
         /// Gets or sets the value which indicates if the property should be ignored. If <see langword="true"/> the other settings will be ignored.
         /// </summary>
         public bool Ignore { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order of the property.
+        /// <para/>
+        /// NOTE: Properties that do not have an order value are sorted by the position in the class.
+        /// </summary>
+        public int Order { get; set; } = -1;
     }
 }

@@ -29,6 +29,13 @@
             Gets or sets the value which indicates if the property should be ignored. If <see langword="true"/> the other settings will be ignored.
             </summary>
         </member>
+        <member name="P:ZimLabs.TableCreator.AppearanceAttribute.Order">
+            <summary>
+            Gets or sets the order of the property.
+            <para/>
+            NOTE: Properties that do not have an order value are sorted by the position in the class.
+            </summary>
+        </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.ColumnWidth">
             <summary>
             Provides the maximal length of a column
@@ -91,18 +98,30 @@
         </member>
         <member name="P:ZimLabs.TableCreator.DataObjects.Property.Name">
             <summary>
-            Gets or sets the name of the property
+            Gets the name of the property
             </summary>
         </member>
         <member name="P:ZimLabs.TableCreator.DataObjects.Property.Appearance">
             <summary>
-            Gets or sets the appearance
+            Gets the appearance
             </summary>
         </member>
         <member name="P:ZimLabs.TableCreator.DataObjects.Property.Ignore">
             <summary>
             Gets the value which indicates if the property should be ignored
             </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.Property.Order">
+            <summary>
+            Gets the order value of the property
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.Property.#ctor(System.String,ZimLabs.TableCreator.AppearanceAttribute)">
+            <summary>
+            Creates a new instance of the <see cref="T:ZimLabs.TableCreator.DataObjects.Property"/>
+            </summary>
+            <param name="name">The name of the property</param>
+            <param name="appearance">The appearance value</param>
         </member>
         <member name="M:ZimLabs.TableCreator.DataObjects.Property.op_Explicit(System.Reflection.PropertyInfo)~ZimLabs.TableCreator.DataObjects.Property">
             <summary>

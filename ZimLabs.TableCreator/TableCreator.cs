@@ -364,8 +364,12 @@ namespace ZimLabs.TableCreator
         private static IReadOnlyCollection<Property> GetProperties<T>()
         {
             var properties = typeof(T).GetProperties();
-            return properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
+            var values = properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
 
+            if (values.Where(w => !w.Ignore).All(a => a.Order != -1))
+                values = values.OrderBy(o => o.Order).ToList();
+
+            return values;
         }
     }
 }

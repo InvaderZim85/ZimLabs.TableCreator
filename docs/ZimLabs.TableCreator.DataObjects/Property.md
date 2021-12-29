@@ -10,11 +10,17 @@ private sealed class Property
 
 | name | description |
 | --- | --- |
-| [Property](Property/Property.md)() | The default constructor. |
-| [Appearance](Property/Appearance.md) { get; set; } | Gets or sets the appearance |
+| [Appearance](Property/Appearance.md) { get; } | Gets the appearance |
 | [Ignore](Property/Ignore.md) { get; } | Gets the value which indicates if the property should be ignored |
-| [Name](Property/Name.md) { get; set; } | Gets or sets the name of the property |
+| [Name](Property/Name.md) { get; } | Gets the name of the property |
+| [Order](Property/Order.md) { get; } | Gets the order value of the property |
 | [explicit operator](Property/op_Explicit.md) | Converts a PropertyInfo into a [`Property`](Property.md) |
+
+## Private Members
+
+| name | description |
+| --- | --- |
+| [Property](Property/Property.md)(…) | Creates a new instance of the [`Property`](Property.md) |
 
 ## See Also
 

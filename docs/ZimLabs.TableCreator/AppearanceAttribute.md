@@ -15,6 +15,7 @@ public sealed class AppearanceAttribute : Attribute
 | [Format](AppearanceAttribute/Format.md) { get; set; } | Gets or sets the format of the value |
 | [Ignore](AppearanceAttribute/Ignore.md) { get; set; } | Gets or sets the value which indicates if the property should be ignored. If `true` the other settings will be ignored. |
 | [Name](AppearanceAttribute/Name.md) { get; set; } | Gets or sets the name of the column which should be used |
+| [Order](AppearanceAttribute/Order.md) { get; set; } | Gets or sets the order of the property. |
 | [TextAlign](AppearanceAttribute/TextAlign.md) { get; set; } | Gets or sets the text align (will be ignored when the output type is Csv) |
 
 ## See Also

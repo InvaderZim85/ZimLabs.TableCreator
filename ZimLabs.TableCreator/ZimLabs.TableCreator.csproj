@@ -14,7 +14,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <PackageReleaseNotes>- Added the option to change the delimiter of CSV and add the row number</PackageReleaseNotes>
   </PropertyGroup>
 

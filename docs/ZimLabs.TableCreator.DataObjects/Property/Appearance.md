@@ -1,9 +1,9 @@
 # Property.Appearance property
 
-Gets or sets the appearance
+Gets the appearance
 
 ```csharp
-public AppearanceAttribute Appearance { get; set; }
+public AppearanceAttribute Appearance { get; }
 ```
 
 ## See Also

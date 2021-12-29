@@ -1,13 +1,19 @@
 # Property constructor
 
-The default constructor.
+Creates a new instance of the [`Property`](../Property.md)
 
 ```csharp
-public Property()
+private Property(string name, AppearanceAttribute appearance)
 ```
+
+| parameter | description |
+| --- | --- |
+| name | The name of the property |
+| appearance | The appearance value |
 
 ## See Also
 
+* class [AppearanceAttribute](../../ZimLabs.TableCreator/AppearanceAttribute.md)
 * class [Property](../Property.md)
 * namespace [ZimLabs.TableCreator.DataObjects](../../ZimLabs.TableCreator.md)
 

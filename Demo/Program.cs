@@ -14,7 +14,7 @@ namespace Demo
         {
             var data = CreateDummyList().OrderByDescending(o => o.Id);
 
-            var tableString = data.CreateTable(OutputType.Csv, true);
+            var tableString = data.CreateTable(OutputType.Default, true);
 
             Console.WriteLine(tableString);
 
@@ -49,7 +49,7 @@ namespace Demo
 
     internal sealed class Person
     {
-        [Appearance(TextAlign = TextAlign.Right)]
+        //[Appearance(TextAlign = TextAlign.Right, Order = 4)]
         public int Id { get; set; }
 
         [Appearance(Name = "First name")]

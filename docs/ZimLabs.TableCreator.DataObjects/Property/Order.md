@@ -1,9 +1,9 @@
-# Property.Name property
+# Property.Order property
 
-Gets the name of the property
+Gets the order value of the property
 
 ```csharp
-public string Name { get; }
+public int Order { get; }
 ```
 
 ## See Also
