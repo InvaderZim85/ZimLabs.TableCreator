@@ -11,6 +11,7 @@ private sealed class Property
 | name | description |
 | --- | --- |
 | [Appearance](Property/Appearance.md) { get; } | Gets the appearance |
+| [CustomName](Property/CustomName.md) { get; } | Gets the custom name if available, otherwise the original name will be returned |
 | [Ignore](Property/Ignore.md) { get; } | Gets the value which indicates if the property should be ignored |
 | [Name](Property/Name.md) { get; } | Gets the name of the property |
 | [Order](Property/Order.md) { get; } | Gets the order value of the property |

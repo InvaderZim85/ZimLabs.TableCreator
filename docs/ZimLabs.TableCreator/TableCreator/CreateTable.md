@@ -1,4 +1,4 @@
-# TableCreator.CreateTable&lt;T&gt; method
+# TableCreator.CreateTable&lt;T&gt; method (1 of 2)
 
 Converts the given list into a "table"
 
@@ -20,6 +20,48 @@ public static string CreateTable<T>(this IEnumerable<T> list,
 ## Return Value
 
 The created table
+
+## Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Will be thrown when the list is null |
+
+## See Also
+
+* enum [OutputType](../OutputType.md)
+* class [TableCreator](../TableCreator.md)
+* namespace [ZimLabs.TableCreator](../../ZimLabs.TableCreator.md)
+
+---
+
+# TableCreator.CreateTable&lt;T&gt; method (2 of 2)
+
+Converts the given value into a "table" (Key, Value columns)
+
+```csharp
+public static string CreateTable<T>(this T value, OutputType outputType = OutputType.Default, 
+    bool printLineNumbers = false, string delimiter = ";")
+    where T : class
+```
+
+| parameter | description |
+| --- | --- |
+| T | The type of the values |
+| value | The value |
+| outputType | The desired output type (optional) |
+| printLineNumbers | true to print line numbers, otherwise false (optional) |
+| delimiter | The delimiter which should be used for CSV (only needed when *outputType* is set to Csv) |
+
+## Return Value
+
+The created table
+
+## Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Will be thrown when the value is null |
 
 ## See Also
 

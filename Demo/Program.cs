@@ -14,9 +14,12 @@ namespace Demo
         {
             var data = CreateDummyList().OrderByDescending(o => o.Id);
 
-            var tableString = data.CreateTable(OutputType.Default, true);
+            var person = data.FirstOrDefault();
 
-            Console.WriteLine(tableString);
+            Console.WriteLine(person.CreateTable());
+
+            // Save as file
+            person.SaveTable("TestFile.txt");
 
             Console.WriteLine("");
             Console.WriteLine("Done");

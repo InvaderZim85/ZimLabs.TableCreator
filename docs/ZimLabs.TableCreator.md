@@ -5,6 +5,7 @@
 | public type | description |
 | --- | --- |
 | class [AppearanceAttribute](ZimLabs.TableCreator/AppearanceAttribute.md) | Represents an attribute to modify the appearance of a column |
+| enum [ListType](ZimLabs.TableCreator/ListType.md) | The different list types |
 | enum [OutputType](ZimLabs.TableCreator/OutputType.md) | The different supported table types |
 | static class [TableCreator](ZimLabs.TableCreator/TableCreator.md) | Provides the function to convert a list of objects into a "table" (ASCII style, markdown, csv) |
 | enum [TextAlign](ZimLabs.TableCreator/TextAlign.md) | The different align types |

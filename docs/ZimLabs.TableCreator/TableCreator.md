@@ -10,8 +10,10 @@ public static class TableCreator
 
 | name | description |
 | --- | --- |
-| static [CreateTable&lt;T&gt;](TableCreator/CreateTable.md)(…) | Converts the given list into a "table" |
-| static [SaveTable&lt;T&gt;](TableCreator/SaveTable.md)(…) | Converts the given list into a "table" and save it into the specified file (2 methods) |
+| static [CreateList&lt;T&gt;](TableCreator/CreateList.md)(…) | Creates a list of the properties with its values |
+| static [CreateTable&lt;T&gt;](TableCreator/CreateTable.md)(…) | Converts the given list into a "table" (2 methods) |
+| static [SaveList&lt;T&gt;](TableCreator/SaveList.md)(…) | Creates a list of the properties with its values and saves it into the specified file (2 methods) |
+| static [SaveTable&lt;T&gt;](TableCreator/SaveTable.md)(…) | Converts the given list into a "table" and save it into the specified file (4 methods) |
 
 ## Private Members
 

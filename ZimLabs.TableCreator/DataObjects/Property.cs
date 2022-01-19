@@ -13,6 +13,20 @@ namespace ZimLabs.TableCreator.DataObjects
         /// Gets the name of the property
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets the custom name if available, otherwise the original name will be returned
+        /// </summary>
+        public string CustomName
+        {
+            get
+            {
+                if (Appearance == null)
+                    return Name;
+
+                return string.IsNullOrEmpty(Appearance.Name) ? Name : Appearance.Name;
+            }
+        }
         
         /// <summary>
         /// Gets the appearance
