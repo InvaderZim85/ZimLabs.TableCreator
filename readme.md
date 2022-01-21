@@ -52,7 +52,12 @@ internal sealed class Person
 }
 ```
 
-The usage:
+> **Note**: If not all properties have an Order value, the following order is applied:
+
+1. occurrence in the class
+2. order according to Order value
+
+Usage of the Create / Save methods:
 
 ```csharp
 var personList = CreateDummyList().ToList();
