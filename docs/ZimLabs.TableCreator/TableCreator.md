@@ -10,10 +10,12 @@ public static class TableCreator
 
 | name | description |
 | --- | --- |
-| static [CreateList&lt;T&gt;](TableCreator/CreateList.md)(…) | Creates a list of the properties with its values |
-| static [CreateTable&lt;T&gt;](TableCreator/CreateTable.md)(…) | Converts the given list into a "table" (2 methods) |
-| static [SaveList&lt;T&gt;](TableCreator/SaveList.md)(…) | Creates a list of the properties with its values and saves it into the specified file (2 methods) |
-| static [SaveTable&lt;T&gt;](TableCreator/SaveTable.md)(…) | Converts the given list into a "table" and save it into the specified file (4 methods) |
+| static [CreateTable&lt;T&gt;](TableCreator/CreateTable.md)(…) | Converts the given list into a "table" |
+| static [CreateValueList&lt;T&gt;](TableCreator/CreateValueList.md)(…) | Creates a list of the properties with its values |
+| static [CreateValueTable&lt;T&gt;](TableCreator/CreateValueTable.md)(…) | Converts the given value into a "table" (Key, Value columns) |
+| static [SaveTable&lt;T&gt;](TableCreator/SaveTable.md)(…) | Converts the given list into a "table" and save it into the specified file (2 methods) |
+| static [SaveValue&lt;T&gt;](TableCreator/SaveValue.md)(…) | Creates a list of the properties with its values and saves it into the specified file (2 methods) |
+| static [SaveValueAsTable&lt;T&gt;](TableCreator/SaveValueAsTable.md)(…) | Converts the given value into a "table" (Key, Value column) and save it into the specified file (2 methods) |
 
 ## Private Members
 

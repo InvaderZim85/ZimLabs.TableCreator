@@ -1,9 +1,9 @@
-# TableCreator.SaveTable&lt;T&gt; method (1 of 2)
+# TableCreator.SaveValueAsTable&lt;T&gt; method (1 of 2)
 
-Converts the given list into a "table" and save it into the specified file
+Converts the given value into a "table" (Key, Value column) and save it into the specified file
 
 ```csharp
-public static void SaveTable<T>(this IEnumerable<T> list, string filepath, 
+public static void SaveValueAsTable<T>(this T value, string filepath, 
     OutputType outputType = OutputType.Default, bool printLineNumbers = false, 
     string delimiter = ";")
     where T : class
@@ -11,12 +11,18 @@ public static void SaveTable<T>(this IEnumerable<T> list, string filepath,
 
 | parameter | description |
 | --- | --- |
-| T | The type of the values |
-| list | The list with the values |
+| T | The type of the value |
+| value | The value |
 | filepath | The path of the destination file |
 | outputType | The desired output type (optional) |
 | printLineNumbers | true to print line numbers, otherwise false (optional) |
 | delimiter | The delimiter which should be used for CSV (only needed when *outputType* is set to Csv) |
+
+## Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Will be thrown when the value is null |
 
 ## See Also
 
@@ -26,21 +32,20 @@ public static void SaveTable<T>(this IEnumerable<T> list, string filepath,
 
 ---
 
-# TableCreator.SaveTable&lt;T&gt; method (2 of 2)
+# TableCreator.SaveValueAsTable&lt;T&gt; method (2 of 2)
 
-Converts the given list into a "table" and save it into the specified file
+Converts the given value into a "table" (Key, Value column) and save it into the specified file
 
 ```csharp
-public static void SaveTable<T>(this IEnumerable<T> list, string filepath, Encoding encoding, 
+public static void SaveValueAsTable<T>(this T value, string filepath, Encoding encoding, 
     OutputType outputType = OutputType.Default, bool printLineNumbers = false, 
     string delimiter = ";")
-    where T : class
 ```
 
 | parameter | description |
 | --- | --- |
-| T | The type of the values |
-| list | The list with the values |
+| T | The type of the value |
+| value | The value |
 | filepath | The path of the destination file |
 | encoding | The encoding of the file |
 | outputType | The desired output type (optional) |
@@ -51,7 +56,7 @@ public static void SaveTable<T>(this IEnumerable<T> list, string filepath, Encod
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Will be thrown when the list is null |
+| ArgumentNullException | Will be thrown when the value is null |
 
 ## See Also
 

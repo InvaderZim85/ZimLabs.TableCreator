@@ -1,9 +1,9 @@
-# TableCreator.SaveList&lt;T&gt; method (1 of 2)
+# TableCreator.SaveValue&lt;T&gt; method (1 of 2)
 
 Creates a list of the properties with its values and saves it into the specified file
 
 ```csharp
-public static void SaveList<T>(this T value, string filepath, ListType type = ListType.Bullets, 
+public static void SaveValue<T>(this T value, string filepath, ListType type = ListType.Bullets, 
     bool alignProperties = false)
     where T : class
 ```
@@ -30,12 +30,12 @@ public static void SaveList<T>(this T value, string filepath, ListType type = Li
 
 ---
 
-# TableCreator.SaveList&lt;T&gt; method (2 of 2)
+# TableCreator.SaveValue&lt;T&gt; method (2 of 2)
 
 Creates a list of the properties with its values and saves it into the specified file
 
 ```csharp
-public static void SaveList<T>(this T value, string filepath, Encoding encoding, 
+public static void SaveValue<T>(this T value, string filepath, Encoding encoding, 
     ListType type = ListType.Bullets, bool alignProperties = false)
     where T : class
 ```

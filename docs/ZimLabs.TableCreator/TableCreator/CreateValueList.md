@@ -1,9 +1,9 @@
-# TableCreator.CreateList&lt;T&gt; method
+# TableCreator.CreateValueList&lt;T&gt; method
 
 Creates a list of the properties with its values
 
 ```csharp
-public static string CreateList<T>(this T value, ListType type = ListType.Bullets, 
+public static string CreateValueList<T>(this T value, ListType type = ListType.Bullets, 
     bool alignProperties = false)
     where T : class
 ```

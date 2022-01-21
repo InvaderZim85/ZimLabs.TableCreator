@@ -12,14 +12,17 @@ namespace Demo
     {
         private static void Main()
         {
-            var data = CreateDummyList().OrderByDescending(o => o.Id);
+            var data = CreateDummyList().OrderByDescending(o => o.Id).ToList();
+
+            Console.WriteLine(data.CreateTable());
 
             var person = data.FirstOrDefault();
 
-            Console.WriteLine(person.CreateTable());
+            Console.WriteLine(person.CreateValueTable());
+            Console.WriteLine(person.CreateValueList());
 
             // Save as file
-            person.SaveTable("TestFile.txt");
+            person.SaveValueAsTable("TestFile.txt");
 
             Console.WriteLine("");
             Console.WriteLine("Done");

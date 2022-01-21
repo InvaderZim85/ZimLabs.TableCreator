@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -122,33 +123,6 @@ namespace ZimLabs.TableCreator
         }
 
         /// <summary>
-        /// Converts the given value into a "table" (Key, Value columns)
-        /// </summary>
-        /// <typeparam name="T">The type of the values</typeparam>
-        /// <param name="value">The value</param>
-        /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
-        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
-        /// <returns>The created table</returns>
-        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static string CreateTable<T>(this T value, OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false, string delimiter = ";") where T : class
-        {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
-            var properties = GetProperties<T>();
-
-            var data = properties.Select(s => new
-            {
-                Key = s.CustomName,
-                Value = GetPropertyValue(value, s.Name)
-            });
-
-            return CreateTable(data, outputType, printLineNumbers, delimiter);
-        }
-
-        /// <summary>
         /// Converts the given list into a "table" and save it into the specified file
         /// </summary>
         /// <typeparam name="T">The type of the values</typeparam>
@@ -184,53 +158,6 @@ namespace ZimLabs.TableCreator
             File.WriteAllText(filepath, result, encoding);
         }
 
-        /// <summary>
-        /// Converts the given value into a "table" (Key, Value column) and save it into the specified file
-        /// </summary>
-        /// <typeparam name="T">The type of the value</typeparam>
-        /// <param name="value">The value</param>
-        /// <param name="filepath">The path of the destination file</param>
-        /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
-        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
-        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static void SaveTable<T>(this T value, string filepath, OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false, string delimiter = ";") where T : class
-        {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
-            value.SaveTable(filepath, Encoding.UTF8, outputType, printLineNumbers, delimiter);
-        }
-
-        /// <summary>
-        /// Converts the given value into a "table" (Key, Value column) and save it into the specified file
-        /// </summary>
-        /// <typeparam name="T">The type of the value</typeparam>
-        /// <param name="value">The value</param>
-        /// <param name="filepath">The path of the destination file</param>
-        /// <param name="encoding">The encoding of the file</param>
-        /// <param name="outputType">The desired output type (optional)</param>
-        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
-        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
-        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static void SaveTable<T>(this T value, string filepath, Encoding encoding,
-            OutputType outputType = OutputType.Default,
-            bool printLineNumbers = false, string delimiter = ";")
-        {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
-            var properties = GetProperties<T>();
-
-            var data = properties.Select(s => new
-            {
-                Key = s.CustomName,
-                Value = GetPropertyValue(value, s.Name)
-            });
-
-            data.SaveTable(filepath, encoding, outputType, printLineNumbers, delimiter);
-        }
         #endregion
 
         #region Public methods for objects
@@ -243,7 +170,7 @@ namespace ZimLabs.TableCreator
         /// <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
         /// <returns>The list</returns>
         /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static string CreateList<T>(this T value, ListType type = ListType.Bullets, bool alignProperties = false) where T : class
+        public static string CreateValueList<T>(this T value, ListType type = ListType.Bullets, bool alignProperties = false) where T : class
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
@@ -266,6 +193,33 @@ namespace ZimLabs.TableCreator
         }
 
         /// <summary>
+        /// Converts the given value into a "table" (Key, Value columns)
+        /// </summary>
+        /// <typeparam name="T">The type of the values</typeparam>
+        /// <param name="value">The value</param>
+        /// <param name="outputType">The desired output type (optional)</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
+        /// <returns>The created table</returns>
+        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+        public static string CreateValueTable<T>(this T value, OutputType outputType = OutputType.Default,
+            bool printLineNumbers = false, string delimiter = ";") where T : class
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            var properties = GetProperties<T>();
+
+            var data = properties.Select(s => new
+            {
+                Key = s.CustomName,
+                Value = GetPropertyValue(value, s.Name)
+            });
+
+            return CreateTable(data, outputType, printLineNumbers, delimiter);
+        }
+
+        /// <summary>
         /// Creates a list of the properties with its values and saves it into the specified file
         /// </summary>
         /// <typeparam name="T">The type of the value</typeparam>
@@ -274,10 +228,10 @@ namespace ZimLabs.TableCreator
         /// <param name="type">The desired list type</param>
         /// <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
         /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static void SaveList<T>(this T value, string filepath, ListType type = ListType.Bullets, bool alignProperties = false)
+        public static void SaveValue<T>(this T value, string filepath, ListType type = ListType.Bullets, bool alignProperties = false)
             where T : class
         {
-            var result = value.CreateList(type, alignProperties);
+            var result = value.CreateValueList(type, alignProperties);
 
             File.WriteAllText(filepath, result, Encoding.UTF8);
         }
@@ -292,13 +246,62 @@ namespace ZimLabs.TableCreator
         /// <param name="type">The desired list type</param>
         /// <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
         /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-        public static void SaveList<T>(this T value, string filepath, Encoding encoding, ListType type = ListType.Bullets, bool alignProperties = false)
+        public static void SaveValue<T>(this T value, string filepath, Encoding encoding, ListType type = ListType.Bullets, bool alignProperties = false)
             where T : class
         {
-            var result = value.CreateList(type, alignProperties);
+            var result = value.CreateValueList(type, alignProperties);
 
             File.WriteAllText(filepath, result, encoding);
         }
+
+        /// <summary>
+        /// Converts the given value into a "table" (Key, Value column) and save it into the specified file
+        /// </summary>
+        /// <typeparam name="T">The type of the value</typeparam>
+        /// <param name="value">The value</param>
+        /// <param name="filepath">The path of the destination file</param>
+        /// <param name="outputType">The desired output type (optional)</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
+        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+        public static void SaveValueAsTable<T>(this T value, string filepath, OutputType outputType = OutputType.Default,
+            bool printLineNumbers = false, string delimiter = ";") where T : class
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            value.SaveValueAsTable(filepath, Encoding.UTF8, outputType, printLineNumbers, delimiter);
+        }
+
+        /// <summary>
+        /// Converts the given value into a "table" (Key, Value column) and save it into the specified file
+        /// </summary>
+        /// <typeparam name="T">The type of the value</typeparam>
+        /// <param name="value">The value</param>
+        /// <param name="filepath">The path of the destination file</param>
+        /// <param name="encoding">The encoding of the file</param>
+        /// <param name="outputType">The desired output type (optional)</param>
+        /// <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
+        /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
+        /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+        public static void SaveValueAsTable<T>(this T value, string filepath, Encoding encoding,
+            OutputType outputType = OutputType.Default,
+            bool printLineNumbers = false, string delimiter = ";")
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            var properties = GetProperties<T>();
+
+            var data = properties.Select(s => new
+            {
+                Key = s.CustomName,
+                Value = GetPropertyValue(value, s.Name)
+            });
+
+            data.SaveTable(filepath, encoding, outputType, printLineNumbers, delimiter);
+        }
+
         #endregion
 
         #region Internal functions
