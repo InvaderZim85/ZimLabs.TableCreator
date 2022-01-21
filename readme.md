@@ -24,7 +24,35 @@ PM > Install-Package ZimLabs.TableCreator
 
 ## Usage
 
-Here a short example
+Attributes:
+
+```csharp
+internal sealed class Person
+{
+    [Appearance(TextAlign = TextAlign.Right, Order = 1)]
+    public int Id { get; set; }
+
+    [Appearance(Name = "First name", Order = 3)]
+    public string Name { get; set; }
+
+    [Appearance(Order = 2)]
+    public string LastName { get; set; }
+
+    [Appearance(Name = "E-Mail", Order = 4)]
+    public string Mail { get; set; }
+
+    [Appearance(Ignore = true)]
+    public string Gender { get; set; }
+
+    [Appearance(Name = "Job title")]
+    public string JobTitle { get; set; }
+
+    [Appearance(Format = "yyyy-MM-dd")]
+    public DateTime Birthday { get; set; }
+}
+```
+
+The usage:
 
 ```csharp
 var personList = CreateDummyList().ToList();
