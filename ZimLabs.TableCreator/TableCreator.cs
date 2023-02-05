@@ -542,10 +542,10 @@ public static class TableCreator
     private static IReadOnlyCollection<Property> GetProperties<T>(List<OverrideAttributeEntry> overrideList)
     {
         var properties = typeof(T).GetProperties();
-        var values = properties.Select(s => (Property) s).Where(w => !w.Ignore).ToList();
+        var values = properties.Select(s => (Property) s).ToList();
 
         if (overrideList == null || !overrideList.Any())
-            return values.OrderBy(o => o.Order).ToList();
+            return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
 
         foreach (var entry in values)
         {
@@ -554,7 +554,7 @@ public static class TableCreator
                 entry.Appearance = overrideEntry.Appearance;
         }
 
-        return values.OrderBy(o => o.Order).ToList();
+        return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
     }
 
     #endregion

@@ -28,6 +28,10 @@ namespace Demo
                 new("SomeNumber", new AppearanceAttribute
                 {
                     Format = "N2"
+                }),
+                new("Gender", new AppearanceAttribute
+                {
+                    Ignore = false
                 })
             };
 

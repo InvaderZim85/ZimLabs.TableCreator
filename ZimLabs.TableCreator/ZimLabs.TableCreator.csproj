@@ -14,10 +14,10 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.4.0</Version>
-    <PackageReleaseNotes>- Added the option to change the delimiter of CSV and add the row number</PackageReleaseNotes>
+    <Version>1.4.1</Version>
+    <PackageReleaseNotes>- Fixed a minor bug (Ignore value was fetched wrong)</PackageReleaseNotes>
     <LangVersion>latest</LangVersion>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageReadmeFile></PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -32,10 +32,6 @@
     <None Include="..\Logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
-    </None>
-    <None Include="..\readme.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
