@@ -15,6 +15,7 @@
 | internal type | description |
 | --- | --- |
 | class [ColumnWidth](ZimLabs.TableCreator.DataObjects/ColumnWidth.md) | Provides the maximal length of a column |
+| class [KeyValueEntry](ZimLabs.TableCreator.DataObjects/KeyValueEntry.md) | Represents a key value entry |
 | class [LineEntry](ZimLabs.TableCreator.DataObjects/LineEntry.md) | Represents a single entry of the given list |
 | class [Property](ZimLabs.TableCreator.DataObjects/Property.md) | Represents the information about a property |
 | class [ValueEntry](ZimLabs.TableCreator.DataObjects/ValueEntry.md) | Represents a single value |

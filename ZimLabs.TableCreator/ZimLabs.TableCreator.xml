@@ -71,6 +71,26 @@
             Numbered list
             </summary>
         </member>
+        <member name="T:ZimLabs.TableCreator.TextAlign">
+            <summary>
+            The different align types
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Left">
+            <summary>
+            Aligns the text to the left
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Right">
+            <summary>
+            Aligns the text to the right
+            </summary>
+        </member>
+        <member name="F:ZimLabs.TableCreator.TextAlign.Center">
+            <summary>
+            Aligns the text to the center (only available when output type is set to <see cref="F:ZimLabs.TableCreator.OutputType.Markdown"/>)
+            </summary>
+        </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.ColumnWidth">
             <summary>
             Provides the maximal length of a column
@@ -99,6 +119,21 @@
             <param name="width">The width of the column</param>
             <param name="align">The align of the column (optional)</param>
         </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.KeyValueEntry">
+            <summary>
+            Represents a key value entry
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.KeyValueEntry.Key">
+            <summary>
+            Gets or sets the key
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.KeyValueEntry.Value">
+            <summary>
+            Gets or sets the value
+            </summary>
+        </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.LineEntry">
             <summary>
             Represents a single entry of the given list
@@ -126,6 +161,33 @@
             <param name="id">The id of the entry</param>
             <param name="isHeader">The value which indicates if the line represents the header (optional)</param>
         </member>
+        <member name="T:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry">
+            <summary>
+            Represents an entry which provides the possibility to override an existing property <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/>
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry.PropertyName">
+            <summary>
+            Gets or sets the name of the property
+            </summary>
+        </member>
+        <member name="P:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry.Appearance">
+            <summary>
+            Gets or sets the new attribute
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry.#ctor">
+            <summary>
+            Creates a new empty instance of the <see cref="T:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry"/>
+            </summary>
+        </member>
+        <member name="M:ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry.#ctor(System.String,ZimLabs.TableCreator.AppearanceAttribute)">
+            <summary>
+            
+            </summary>
+            <param name="propertyName">The name of the property</param>
+            <param name="appearance">The new appearance attribute</param>
+        </member>
         <member name="T:ZimLabs.TableCreator.DataObjects.Property">
             <summary>
             Represents the information about a property
@@ -143,7 +205,7 @@
         </member>
         <member name="P:ZimLabs.TableCreator.DataObjects.Property.Appearance">
             <summary>
-            Gets the appearance
+            Gets or sets the appearance
             </summary>
         </member>
         <member name="P:ZimLabs.TableCreator.DataObjects.Property.Ignore">
@@ -222,7 +284,7 @@
             Contains the desired table type
             </summary>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.CreateTable``1(System.Collections.Generic.IEnumerable{``0},ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateTable``1(System.Collections.Generic.IEnumerable{``0},ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given list into a "table"
             </summary>
@@ -231,10 +293,11 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The created table</returns>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the list is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given list into a "table" and save it into the specified file
             </summary>
@@ -244,8 +307,9 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveTable``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given list into a "table" and save it into the specified file
             </summary>
@@ -256,9 +320,10 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the list is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.CreateValueList``1(``0,ZimLabs.TableCreator.ListType,System.Boolean)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateValueList``1(``0,ZimLabs.TableCreator.ListType,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Creates a list of the properties with its values
             </summary>
@@ -266,10 +331,11 @@
             <param name="value">The value</param>
             <param name="type">The desired list type</param>
             <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The list</returns>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.CreateValueTable``1(``0,ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateValueTable``1(``0,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given value into a "table" (Key, Value columns)
             </summary>
@@ -278,10 +344,11 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The created table</returns>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,ZimLabs.TableCreator.ListType,System.Boolean)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,ZimLabs.TableCreator.ListType,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Creates a list of the properties with its values and saves it into the specified file
             </summary>
@@ -290,9 +357,10 @@
             <param name="filepath">The path of the destination file</param>
             <param name="type">The desired list type</param>
             <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.ListType,System.Boolean)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.ListType,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Creates a list of the properties with its values and saves it into the specified file
             </summary>
@@ -302,9 +370,10 @@
             <param name="encoding">The encoding of the file</param>
             <param name="type">The desired list type</param>
             <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given value into a "table" (Key, Value column) and save it into the specified file
             </summary>
@@ -314,9 +383,10 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean,System.String)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Converts the given value into a "table" (Key, Value column) and save it into the specified file
             </summary>
@@ -327,9 +397,10 @@
             <param name="outputType">The desired output type (optional)</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false (optional)</param>
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean)">
+        <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Creates a CSV file of the list
             </summary>
@@ -337,6 +408,7 @@
             <param name="list">The list with the values</param>
             <param name="delimiter">The delimiter which should be used for CSV</param>
             <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+            <param name="overrideList">The list with the override entries</param>
             <returns>The csv file content</returns>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.PrintLine(System.Collections.Generic.IReadOnlyList{ZimLabs.TableCreator.DataObjects.ColumnWidth},System.Int32)">
@@ -380,32 +452,13 @@
             <param name="format">The desired format</param>
             <returns>The property value</returns>
         </member>
-        <member name="M:ZimLabs.TableCreator.TableCreator.GetProperties``1">
+        <member name="M:ZimLabs.TableCreator.TableCreator.GetProperties``1(System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
             Gets all properties of the specified type
             </summary>
             <typeparam name="T">The type</typeparam>
+            <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The list with the properties</returns>
-        </member>
-        <member name="T:ZimLabs.TableCreator.TextAlign">
-            <summary>
-            The different align types
-            </summary>
-        </member>
-        <member name="F:ZimLabs.TableCreator.TextAlign.Left">
-            <summary>
-            Aligns the text to the left
-            </summary>
-        </member>
-        <member name="F:ZimLabs.TableCreator.TextAlign.Right">
-            <summary>
-            Aligns the text to the right
-            </summary>
-        </member>
-        <member name="F:ZimLabs.TableCreator.TextAlign.Center">
-            <summary>
-            Aligns the text to the center (only available when output type is set to <see cref="F:ZimLabs.TableCreator.OutputType.Markdown"/>)
-            </summary>
         </member>
     </members>
 </doc>
