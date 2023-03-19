@@ -13,6 +13,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Install](#install)
 - [Usage](#usage)
 - [Known issues](#known-issues)
+- [Changelog](#changelog)
 
 <!-- /TOC -->
 
@@ -134,6 +135,30 @@ Currently it's possible to call the methods for a single entry with a list:
 personList.CreateValueList();
 ```
 
-This call will cause a `System.Reflection.TargetParameterCountException`.
+~~I'll try to fix the bug in the next version (1.5).~~
 
-I'll try to fix the bug in the next version (1.5).
+Since I didn't find a solution to prevent calling the method for a single value, I included a check that throws an error when trying to call the method for a single value from a list.
+
+If you call from a list a function, which was developed only for a single value, an `NotSupportedException` with the following message will be thrown:
+
+```
+The specified type is not supported by this method. Please choose "CreateTable" or "SaveTable" instead.
+```
+
+Sorry for the inconvenience.
+
+## Changelog
+
+### Version 1.5.0
+
+Added check function to the following methods
+
+- `CreateValueTable`
+- `SaveValue`
+- `SaveValueAsTable`
+
+The function checks if the given value is a list or not. If the value is a list an exception (`NotSupportedException`) will be thrown.
+
+For more information see [Known issues](#known-issues).
+
+I also removed the documentation for the classes, because the tool I use for that doesn't seem to cope with .NET Standard, so the documentation wasn't updated anymore.

@@ -14,10 +14,11 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.4.1</Version>
+    <Version>1.5.0</Version>
     <PackageReleaseNotes>- Fixed a minor bug (Ignore value was fetched wrong)</PackageReleaseNotes>
     <LangVersion>latest</LangVersion>
-    <PackageReadmeFile></PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <Title>ZimLabs.TableCreator</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,10 +34,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <None Include="..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(SolutionDir)Tools\gitDoc\GitDocGenerator.exe -p $(TargetPath) -o $(SolutionDir)docs -n ZimLabs.TableCreator -g &quot;https://github.com/InvaderZim85/ZimLabs.TableCreator&quot;" />
-  </Target>
 
 </Project>

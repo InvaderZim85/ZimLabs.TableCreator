@@ -334,6 +334,7 @@
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The list</returns>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.CreateValueTable``1(``0,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -347,6 +348,7 @@
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The created table</returns>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,ZimLabs.TableCreator.ListType,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -359,6 +361,7 @@
             <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.SaveValue``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.ListType,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -372,6 +375,7 @@
             <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -385,6 +389,7 @@
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.SaveValueAsTable``1(``0,System.String,System.Text.Encoding,ZimLabs.TableCreator.OutputType,System.Boolean,System.String,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -399,6 +404,7 @@
             <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="F:ZimLabs.TableCreator.OutputType.Csv"/>)</param>
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <exception cref="T:System.ArgumentNullException">Will be thrown when the value is null</exception>
+            <exception cref="T:System.NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
         </member>
         <member name="M:ZimLabs.TableCreator.TableCreator.CreateCsv``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Boolean,System.Collections.Generic.List{ZimLabs.TableCreator.DataObjects.OverrideAttributeEntry})">
             <summary>
@@ -459,6 +465,13 @@
             <typeparam name="T">The type</typeparam>
             <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="T:ZimLabs.TableCreator.AppearanceAttribute"/> will be ignored</param>
             <returns>The list with the properties</returns>
+        </member>
+        <member name="M:ZimLabs.TableCreator.TableCreator.IsList``1">
+            <summary>
+            Checks if the type is a "list"
+            </summary>
+            <typeparam name="T">The type</typeparam>
+            <returns><see langword="true"/> when the type is a list, otherwise <see langword="false"/></returns>
         </member>
     </members>
 </doc>

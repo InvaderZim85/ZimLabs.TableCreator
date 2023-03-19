@@ -15,7 +15,15 @@ namespace Demo
         {
             var data = CreateDummyList().OrderByDescending(o => o.Id).ToList();
 
-            //Console.WriteLine(data.CreateTable());
+            // Will fail
+            //Console.WriteLine(data.CreateValueTable());
+            //Console.WriteLine(data.ToArray().CreateValueTable());
+
+            Console.WriteLine(data.Select(s => new
+            {
+                s.Id,
+                s.Name
+            }).CreateValueTable());
 
             var person = data.FirstOrDefault(f => f.SomeNumber > 10000);
 
@@ -61,20 +69,6 @@ namespace Demo
             }
 
             return list;
-        }
-
-        public static IReadOnlyCollection<Person> CreateErrorList()
-        {
-            return new List<Person>
-            {
-                new Person
-                {
-                    Id = 1,
-                    Name = "Andreas",
-                    Mail = "Test@test.mail",
-                    Birthday = new DateTime(1985, 7, 12)
-                }
-            };
         }
     }
 

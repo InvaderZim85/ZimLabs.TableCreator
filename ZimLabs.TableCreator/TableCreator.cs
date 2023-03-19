@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -179,9 +180,16 @@ public static class TableCreator
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The list</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static string CreateValueList<T>(this T value, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry> overrideList = null) where T : class
     {
+        if (IsList<T>())
+        {
+            throw new NotSupportedException(
+                "The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
+        }
+
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
@@ -214,10 +222,17 @@ public static class TableCreator
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The created table</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static string CreateValueTable<T>(this T value, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", List<OverrideAttributeEntry> overrideList = null)
         where T : class
     {
+        if (IsList<T>())
+        {
+            throw new NotSupportedException(
+                "The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
+        }
+
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
@@ -244,6 +259,7 @@ public static class TableCreator
     /// <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static void SaveValue<T>(this T value, string filepath, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry> overrideList = null)
         where T : class
@@ -264,6 +280,7 @@ public static class TableCreator
     /// <param name="alignProperties">true to add dots to the end of the properties so that all properties have the same length</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static void SaveValue<T>(this T value, string filepath, Encoding encoding, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry> overrideList = null)
         where T : class
@@ -284,6 +301,7 @@ public static class TableCreator
     /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static void SaveValueAsTable<T>(this T value, string filepath, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", List<OverrideAttributeEntry> overrideList = null)
         where T : class
@@ -306,10 +324,17 @@ public static class TableCreator
     /// <param name="delimiter">The delimiter which should be used for CSV (only needed when <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/>)</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is a assignable from IEnumerable</exception>
     public static void SaveValueAsTable<T>(this T value, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", List<OverrideAttributeEntry> overrideList = null)
     {
+        if (IsList<T>())
+        {
+            throw new NotSupportedException(
+                "The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
+        }
+
         if (value == null)
             throw new ArgumentNullException(nameof(value));
 
@@ -555,6 +580,17 @@ public static class TableCreator
         }
 
         return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
+    }
+
+    /// <summary>
+    /// Checks if the type is a "list"
+    /// </summary>
+    /// <typeparam name="T">The type</typeparam>
+    /// <returns><see langword="true"/> when the type is a list, otherwise <see langword="false"/></returns>
+    private static bool IsList<T>()
+    {
+        var type = typeof(T);
+        return typeof(IEnumerable).IsAssignableFrom(type);
     }
 
     #endregion
