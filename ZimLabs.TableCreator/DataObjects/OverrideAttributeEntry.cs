@@ -13,7 +13,7 @@ public sealed class OverrideAttributeEntry
     /// <summary>
     /// Gets or sets the new attribute
     /// </summary>
-    public AppearanceAttribute Appearance { get; set; }
+    public AppearanceAttribute Appearance { get; set; } = new();
 
     /// <summary>
     /// Creates a new empty instance of the <see cref="OverrideAttributeEntry"/>

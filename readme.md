@@ -14,6 +14,8 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Changelog](#changelog)
+    - [Version 2.0.0](#version-200)
+    - [Version 1.5.0](#version-150)
 
 <!-- /TOC -->
 
@@ -148,6 +150,16 @@ The specified type is not supported by this method. Please choose "CreateTable" 
 Sorry for the inconvenience.
 
 ## Changelog
+
+### Version 2.0.0
+
+🚨🚨🚨 BREAKING CHANGE 🚨🚨🚨
+
+Between the last version and this one the runtime environment has been changed! New runtime environment is **.NET 7**
+
+Other changes:
+
+- Added the support of `DataTable`
 
 ### Version 1.5.0
 

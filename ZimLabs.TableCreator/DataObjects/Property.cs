@@ -17,17 +17,8 @@ internal sealed class Property
     /// <summary>
     /// Gets the custom name if available, otherwise the original name will be returned
     /// </summary>
-    public string CustomName
-    {
-        get
-        {
-            if (Appearance == null)
-                return Name;
+    public string CustomName => string.IsNullOrEmpty(Appearance.Name) ? Name : Appearance.Name;
 
-            return string.IsNullOrEmpty(Appearance.Name) ? Name : Appearance.Name;
-        }
-    }
-        
     /// <summary>
     /// Gets or sets the appearance
     /// </summary>
@@ -48,10 +39,10 @@ internal sealed class Property
     /// </summary>
     /// <param name="name">The name of the property</param>
     /// <param name="appearance">The appearance value</param>
-    private Property(string name, AppearanceAttribute appearance)
+    public Property(string name, AppearanceAttribute? appearance)
     {
         Name = name;
-        Appearance = appearance;
+        Appearance = appearance ?? new AppearanceAttribute();
     }
 
     /// <summary>
