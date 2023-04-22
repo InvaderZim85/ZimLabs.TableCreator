@@ -12,7 +12,11 @@ internal static class Program
 
         ListTest();
 
-        SingleEntryTest();
+        SingleClassEntryTest();
+
+        AnonymousTest();
+
+        SingleAnonymousEntryTest();
     }
 
     private static void TableTest()
@@ -64,6 +68,8 @@ internal static class Program
                 person.Locked);
         }
 
+        Console.WriteLine("DataTable Test");
+        Console.WriteLine("--------------");
         Console.WriteLine("Persons:");
         Console.WriteLine(dataTable.CreateTable(overrideList: overrideList));
     }
@@ -72,16 +78,54 @@ internal static class Program
     {
         var dummyList = CreatePersonList();
 
-        Console.WriteLine("DummyList:");
+        Console.WriteLine("Class list");
+        Console.WriteLine("----------");
+        Console.WriteLine("Persons:");
         Console.WriteLine(dummyList.CreateTable());
     }
 
-    private static void SingleEntryTest()
+    private static void SingleClassEntryTest()
     {
         var entry = CreatePersonList().FirstOrDefault();
 
+        Console.WriteLine("Single class entry");
+        Console.WriteLine("------------------");
         Console.WriteLine("Person:");
         Console.WriteLine(entry!.CreateValueList());
+    }
+
+    private static void AnonymousTest()
+    {
+        var list = CreatePersonList().Select(s => new
+        {
+            s.Id,
+            s.Name,
+            s.Title,
+            s.DepartmentId,
+            s.Locked
+        }).ToList();
+
+        Console.WriteLine("Anonymous list");
+        Console.WriteLine("--------------");
+        Console.WriteLine("Persons:");
+        Console.WriteLine(list.CreateTable());
+    }
+
+    private static void SingleAnonymousEntryTest()
+    {
+        var entry = CreatePersonList().Select(s => new
+        {
+            s.Id,
+            s.Name,
+            s.Title,
+            s.DepartmentId,
+            s.Locked
+        }).FirstOrDefault();
+
+        Console.WriteLine("Single anonymous entry test");
+        Console.WriteLine("---------------------------");
+        Console.WriteLine("Person:");
+        Console.WriteLine(entry!.CreateValueTable());
     }
 
     private static List<Person> CreatePersonList()
