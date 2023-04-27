@@ -135,10 +135,10 @@ internal static class TableHelper
 
         // Add the content
         var rowCount = 1;
-
-        var valueList = new List<string>();
         foreach (DataRow row in table.Rows)
         {
+            var valueList = new List<string>();
+
             if (printLineNumbers)
                 valueList.Add(rowCount.ToString());
 

@@ -72,6 +72,11 @@ internal static class Program
         Console.WriteLine("--------------");
         Console.WriteLine("Persons:");
         Console.WriteLine(dataTable.CreateTable(overrideList: overrideList));
+
+        // csv content
+        var csvContent = dataTable.CreateTable(OutputType.Csv, overrideList: overrideList);
+        Console.WriteLine("CSV content:");
+        Console.WriteLine(csvContent);
     }
 
     private static void ListTest()
