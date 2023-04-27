@@ -128,6 +128,8 @@ Value table
 +------------+-----------------------+
 ```
 
+For more example take a look at the demo project.
+
 ## Known issues
 
 Currently it's possible to call the methods for a single entry with a list:
