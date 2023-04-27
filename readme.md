@@ -14,6 +14,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Changelog](#changelog)
+    - [Version 2.0.1](#version-201)
     - [Version 2.0.0](#version-200)
     - [Version 1.5.0](#version-150)
 
@@ -152,6 +153,10 @@ The specified type is not supported by this method. Please choose "CreateTable" 
 Sorry for the inconvenience.
 
 ## Changelog
+
+### Version 2.0.1
+
+- Fixed a bug in the `DataTable` CSV generator 
 
 ### Version 2.0.0
 
