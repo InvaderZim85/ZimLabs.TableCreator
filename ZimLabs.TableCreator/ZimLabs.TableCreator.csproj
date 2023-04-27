@@ -1,38 +1,29 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Andreas Pouwels</Authors>
-    <Company />
-    <Description>Library to convert a list of values into a "table" (ASCII-styled, markdown, csv)</Description>
-    <Copyright>Andreas Pouwels</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageLicenseFile></PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
-    <PackageIcon>Logo.png</PackageIcon>
-    <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.5.0</Version>
-    <PackageReleaseNotes>- Fixed a minor bug (Ignore value was fetched wrong)</PackageReleaseNotes>
-    <LangVersion>latest</LangVersion>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <Title>ZimLabs.TableCreator</Title>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>ZimLabs.TableCreator.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>ZimLabs.TableCreator.xml</DocumentationFile>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+      <Authors>Andreas Pouwels</Authors>
+      <Description>Library to convert a list of values into a "table" (ASCII-styled, markdown, csv)</Description>
+      <Copyright>Andreas Pouwels</Copyright>
+      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+      <Title>ZimLabs.TableCreator</Title>
+      <Version>2.0.0</Version>
+      <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
+      <PackageIcon>Logo.png</PackageIcon>
+      <PackageReadmeFile>readme.md</PackageReadmeFile>
+      <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
+      <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
+      <PackageReleaseNotes>BREAKING CHANGE: Updated the framework from .NET Standard to .NET 7</PackageReleaseNotes>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\Logo.png">
       <Pack>True</Pack>
-      <PackagePath></PackagePath>
+      <PackagePath>\</PackagePath>
     </None>
     <None Include="..\readme.md">
       <Pack>True</Pack>
