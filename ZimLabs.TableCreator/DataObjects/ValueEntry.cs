@@ -30,11 +30,22 @@ internal sealed class ValueEntry
     /// </summary>
     /// <param name="columnName">The name of the column</param>
     /// <param name="value">The value which should be shown</param>
-    /// <param name="customColumnName">THe display name</param>
+    /// <param name="customColumnName">The display name</param>
     public ValueEntry(string columnName, string value, string customColumnName = "")
     {
         ColumnName = columnName;
         Value = value;
         _customColumnName = customColumnName;
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ValueEntry"/>
+    /// </summary>
+    /// <param name="property">The property</param>
+    public ValueEntry(Property property)
+    {
+        ColumnName = property.Name;
+        Value = string.IsNullOrEmpty(property.Appearance.Name) ? property.Name : property.Appearance.Name;
+        _customColumnName = property.Appearance.Name;
     }
 }

@@ -3,15 +3,17 @@
 /// <summary>
 /// Represents a key value entry
 /// </summary>
-internal class KeyValueEntry
+/// <param name="key">The key</param>
+/// <param name="value">The value of the key</param>
+internal sealed class KeyValueEntry(string key, string value)
 {
     /// <summary>
-    /// Gets or sets the key
+    /// Gets the key
     /// </summary>
-    public string Key { get; set; } = string.Empty;
+    public string Key { get; } = key;
 
     /// <summary>
-    /// Gets or sets the value
+    /// Gets the value
     /// </summary>
-    public string Value { get; set; } = string.Empty;
+    public string Value { get; } = value;
 }
