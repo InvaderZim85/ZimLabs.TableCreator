@@ -3,33 +3,26 @@
 /// <summary>
 /// Provides the maximal length of a column
 /// </summary>
-internal class ColumnWidth
+/// <remarks>
+/// Creates a new instance of the <see cref="ColumnWidth"/>
+/// </remarks>
+/// <param name="columnName">The name of the column</param>
+/// <param name="width">The width of the column</param>
+/// <param name="align">The alignment of the column (optional)</param>
+internal readonly struct ColumnWidth(string columnName, int width, TextAlign align = TextAlign.Left)
 {
     /// <summary>
     /// Gets the name of the column
     /// </summary>
-    public string ColumnName { get; }
+    public string ColumnName { get; } = columnName;
 
     /// <summary>
     /// Gets the width of the column
     /// </summary>
-    public int Width { get; }
+    public int Width { get; } = width;
 
     /// <summary>
-    /// Gets the align of the text
+    /// Gets the alignment of the text
     /// </summary>
-    public TextAlign Align { get; }
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="ColumnWidth"/>
-    /// </summary>
-    /// <param name="columnName">The name of the column</param>
-    /// <param name="width">The width of the column</param>
-    /// <param name="align">The align of the column (optional)</param>
-    public ColumnWidth(string columnName, int width, TextAlign align = TextAlign.Left)
-    {
-        ColumnName = columnName;
-        Width = width;
-        Align = align;
-    }
+    public TextAlign Align { get; } = align;
 }

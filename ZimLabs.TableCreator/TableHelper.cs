@@ -65,7 +65,7 @@ internal static class TableHelper
     {
         var tmpList = list.Where(w => w != null).ToList();
 
-        if (!tmpList.Any())
+        if (tmpList.Count == 0)
             return string.Empty;
 
         var content = new StringBuilder();
@@ -88,7 +88,7 @@ internal static class TableHelper
         var rowCount = 1;
         foreach (var valueList in tmpList.Where(w => w != null).Select(entry => (from property in properties
                      where !property.Appearance.Ignore
-                     select GetPropertyValue(entry!, property.Name, property.Appearance.Format)).ToList()))
+                     select GetPropertyValue(entry!, property)).ToList()))
         {
             if (printLineNumbers)
                 valueList.Insert(0, rowCount.ToString());
@@ -142,7 +142,8 @@ internal static class TableHelper
             if (printLineNumbers)
                 valueList.Add(rowCount.ToString());
 
-            valueList.AddRange(properties.Select(property => row[property.Name].ToString() ?? string.Empty));
+            //valueList.AddRange(properties.Select(property => row[property.Name].ToString() ?? string.Empty));
+            valueList.AddRange(properties.Select(property => GetPropertyValue(row, property.Name, property.Appearance.Format)));
 
             content.AppendLine(string.Join(delimiter, valueList));
 
@@ -164,39 +165,31 @@ internal static class TableHelper
     public static string PrintLine(OutputType outputType, bool printLineNumbers, int maxLineLength,
         IReadOnlyList<ColumnWidth> widthList, int spacer = 2)
     {
-        var lineStartEnd = "+";
-        if (outputType == OutputType.Markdown)
-            lineStartEnd = "|";
+        var lineStartEnd = outputType == OutputType.Markdown ? "|" : "+";
 
         var result = lineStartEnd;
 
         if (printLineNumbers)
         {
-            if (outputType == OutputType.Markdown)
-                result += $"{"-:".PadLeft(maxLineLength + spacer, '-')}|";
-            else
-                result += $"{"-".PadRight(maxLineLength + spacer, '-')}+";
+            result += outputType == OutputType.Markdown
+                ? $"{"-:".PadLeft(maxLineLength + spacer, '-')}|"
+                : $"{"-".PadRight(maxLineLength + spacer, '-')}+";
         }
-
 
         for (var i = 0; i < widthList.Count; i++)
         {
             var entry = widthList[i];
             var separator = i + 1 == widthList.Count ? lineStartEnd : "+";
-            if (outputType == OutputType.Markdown)
-            {
-                result += entry.Align switch
+
+            result += outputType == OutputType.Markdown
+                ? entry.Align switch
                 {
                     TextAlign.Left => $"{":-".PadRight(entry.Width + spacer, '-')}|",
                     TextAlign.Right => $"{"-:".PadLeft(entry.Width + spacer, '-')}|",
                     TextAlign.Center => $":{"-".PadRight(entry.Width, '-')}:|",
                     _ => $"{"-".PadRight(entry.Width + spacer, '-')}|"
-                };
-            }
-            else
-            {
-                result += $"{"-".PadRight(entry.Width + spacer, '-')}{separator}";
-            }
+                }
+                : $"{"-".PadRight(entry.Width + spacer, '-')}{separator}";
         }
 
         return result;
@@ -232,10 +225,9 @@ internal static class TableHelper
 
         if (printLineNumbers)
         {
-            if (header)
-                result += $" {"Row".PadRight(maxLineLength)} {lineStartEnd}";
-            else
-                result += $" {line.Id.ToString().PadLeft(maxLineLength)} {lineStartEnd}";
+            result += header
+                ? $" {"Row".PadRight(maxLineLength)} {lineStartEnd}"
+                : $" {line.Id.ToString().PadLeft(maxLineLength)} {lineStartEnd}";
         }
 
         foreach (var entry in widthList)
@@ -244,16 +236,11 @@ internal static class TableHelper
             if (value == null)
                 continue;
 
-            if (header)
-            {
-                result += $" {value.DisplayName.PadRight(entry.Width)} {lineStartEnd}";
-            }
-            else
-            {
-                result += entry.Align == TextAlign.Left
+            result += header
+                ? $" {value.DisplayName.PadRight(entry.Width)} {lineStartEnd}"
+                : entry.Align == TextAlign.Left
                     ? $" {value.Value.PadRight(entry.Width)} {lineStartEnd}"
                     : $" {value.Value.PadLeft(entry.Width)} {lineStartEnd}";
-            }
         }
 
         return result;
@@ -280,20 +267,20 @@ internal static class TableHelper
     /// Gets the value of the property
     /// </summary>
     /// <param name="obj">The object which contains the data</param>
-    /// <param name="propertyName">The name of the property</param>
-    /// <param name="format">The desired format</param>
+    /// <param name="property">The property with the needed values (name, appearance values)</param>
     /// <returns>The property value</returns>
-    public static string GetPropertyValue(object obj, string propertyName, string format = "")
+    public static string GetPropertyValue(object obj, Property property)
     {
-        var value = obj.GetType().GetProperty(propertyName) == null
-            ? null
-            : obj.GetType().GetProperty(propertyName)?.GetValue(obj, null);
+        var tmpProperty = obj.GetType().GetProperty(property.Name);
+        var value = tmpProperty?.GetValue(obj, null);
 
         if (value == null)
             return string.Empty;
 
         var tmpValue = value.ToString() ?? string.Empty;
-        return string.IsNullOrEmpty(format) ? tmpValue : string.Format($"{{0:{format}}}", tmpValue);
+        return string.IsNullOrEmpty(property.Appearance.Format)
+            ? tmpValue
+            : string.Format($"{{0:{property.Appearance.Format}}}", value);
     }
 
     /// <summary>
@@ -305,12 +292,10 @@ internal static class TableHelper
     /// <returns>The property value</returns>
     public static string GetPropertyValue(DataRow row, string propertyName, string format = "")
     {
-        var value = row[propertyName].ToString();
+        var value = row[propertyName]; // Note: Cannot be null, because the name of the property was gathered by the GetProperties method
+        var tmpValue = value.ToString() ?? string.Empty;
 
-        if (string.IsNullOrEmpty(value))
-            return string.Empty;
-
-        return string.IsNullOrEmpty(format) ? value : string.Format($"{{0:{format}}}", value);
+        return string.IsNullOrEmpty(format) ? tmpValue : string.Format($"{{0:{format}}}", value);
     }
 
     /// <summary>
@@ -324,7 +309,7 @@ internal static class TableHelper
         var properties = typeof(T).GetProperties();
         var values = properties.Select(s => (Property)s).ToList();
 
-        if (overrideList == null || !overrideList.Any())
+        if (overrideList == null || overrideList.Count == 0)
             return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
 
         foreach (var entry in values)

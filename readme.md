@@ -130,7 +130,7 @@ Value table
 +------------+-----------------------+
 ```
 
-For more example take a look at the demo project.
+For more examples take a look at the demo project.
 
 ## Known issues
 
@@ -154,6 +154,14 @@ The specified type is not supported by this method. Please choose "CreateTable" 
 Sorry for the inconvenience.
 
 ## Changelog
+
+### Version 2.1.0
+
+- Fixed some bugs:
+    - Custom *format* was not used in some cases (`DataTable` functions)
+    - Missing `null` check in the list functions
+- Added .NET 8 support (multiple target frameworks). Now .NET 7 and .NET 8 are supported
+- Minor changes under the hood (usage of the new C# 12 features)
 
 ### Version 2.0.2
 
