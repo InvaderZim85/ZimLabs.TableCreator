@@ -23,6 +23,8 @@ internal static class Program
         EmptyEntryTest();
 
         WrongMethodTest();
+
+        CsvEncapsulateContentTest();
     }
 
     private static void TableTest()
@@ -34,8 +36,8 @@ internal static class Program
         var overrideList = new List<OverrideAttributeEntry>
         {
             new("Id", new AppearanceAttribute(order: 1, textAlign: TextAlign.Left)),
-            new("Name", new AppearanceAttribute(order: 3)),
-            new("Title", new AppearanceAttribute(order: 2)),
+            new("Name", new AppearanceAttribute(order: 3, encapsulateContent: true)),
+            new("Title", new AppearanceAttribute(order: 2, encapsulateContent: true)),
             new("DepartmentId", new AppearanceAttribute(true)),
             new("Locked", new AppearanceAttribute("User locked", order: 4)),
             new("SomeValue", new AppearanceAttribute("Some value", order: 5, format: "N0")),
@@ -201,6 +203,22 @@ internal static class Program
         }
 
         Console.WriteLine();
+    }
+
+    private static void CsvEncapsulateContentTest()
+    {
+        Console.WriteLine("CSV - Encapsulate content test");
+        Console.WriteLine("==============================");
+
+        var persons = Helper.CreatePersonList();
+
+        var content = persons.CreateTable(new TableCreatorOptions
+        {
+            OutputType = OutputType.Csv,
+            AddHeader = false
+        });
+
+        Console.WriteLine(content);
     }
 }
 

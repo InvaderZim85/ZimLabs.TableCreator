@@ -9,7 +9,7 @@
       <Copyright>Andreas Pouwels</Copyright>
       <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
       <Title>ZimLabs.TableCreator</Title>
-      <Version>2.0.2</Version>
+      <Version>2.1.1</Version>
       <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
       <PackageIcon>Logo.png</PackageIcon>
       <PackageReadmeFile>readme.md</PackageReadmeFile>

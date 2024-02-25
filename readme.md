@@ -14,6 +14,8 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Changelog](#changelog)
+    - [Version 2.1.1](#version-211)
+    - [Version 2.1.0](#version-210)
     - [Version 2.0.2](#version-202)
     - [Version 2.0.1](#version-201)
     - [Version 2.0.0](#version-200)
@@ -154,6 +156,12 @@ The specified type is not supported by this method. Please choose "CreateTable" 
 Sorry for the inconvenience.
 
 ## Changelog
+
+### Version 2.1.1
+
+- Option `addHeader` addded, with which you can decide whether the CSV content should contain a header line.
+- Added classes for the various options to improve clarity (`TableCreateOptions` and `TableCreatorListOptions`).
+- Appearance attribute adjusted. It is now possible to specify whether the content of a property should be encapsulate in quotation marks.
 
 ### Version 2.1.0
 

@@ -40,6 +40,13 @@ internal sealed class Property(string name, AppearanceAttribute? appearance)
     public int Order => Appearance.Order;
 
     /// <summary>
+    /// Gets or sets the value which indicates if the content should be encapsulated by quotes
+    /// <para />
+    /// <b>Example</b>: <c>...;"Some content";...</c>
+    /// </summary>
+    public bool EncapsulateContent => Appearance.EncapsulateContent;
+
+    /// <summary>
     /// Converts a <see cref="PropertyInfo"/> into a <see cref="Property"/>
     /// </summary>
     /// <param name="prop">The original property</param>

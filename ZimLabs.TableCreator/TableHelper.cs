@@ -58,9 +58,10 @@ internal static class TableHelper
     /// <param name="list">The list with the values</param>
     /// <param name="delimiter">The delimiter which should be used for CSV</param>
     /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+    /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/></param>
     /// <param name="overrideList">The list with the override entries</param>
     /// <returns>The csv file content</returns>
-    public static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers,
+    public static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers, bool addHeader,
         List<OverrideAttributeEntry>? overrideList)
     {
         var tmpList = list.Where(w => w != null).ToList();
@@ -74,21 +75,24 @@ internal static class TableHelper
         var properties = GetProperties<T>(overrideList);
 
         // Add header line
-        var headerList = new List<string>();
-        if (printLineNumbers)
-            headerList.Add("Row");
+        if (addHeader)
+        {
+            var headerList = new List<string>();
+            if (printLineNumbers)
+                headerList.Add("Row");
 
-        headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
-            ? s.Name
-            : s.Appearance.Name));
+            headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
+                ? s.Name
+                : s.Appearance.Name));
 
-        content.AppendLine(string.Join(delimiter, headerList));
+            content.AppendLine(string.Join(delimiter, headerList));
+        }
 
         // Add the content
         var rowCount = 1;
         foreach (var valueList in tmpList.Where(w => w != null).Select(entry => (from property in properties
                      where !property.Appearance.Ignore
-                     select GetPropertyValue(entry!, property)).ToList()))
+                     select GetPropertyValue(entry!, property, true)).ToList()))
         {
             if (printLineNumbers)
                 valueList.Insert(0, rowCount.ToString());
@@ -108,10 +112,10 @@ internal static class TableHelper
     /// <param name="table">The data table</param>
     /// <param name="delimiter">The delimiter which should be used for CSV</param>
     /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
+    /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/></param>
     /// <param name="overrideList">The list with the override entries</param>
     /// <returns>The csv file content</returns>
-    public static string CreateCsv(DataTable table, string delimiter, bool printLineNumbers,
-        List<OverrideAttributeEntry>? overrideList)
+    public static string CreateCsv(DataTable table, string delimiter, bool printLineNumbers, bool addHeader, List<OverrideAttributeEntry>? overrideList)
     {
         if (table.Rows.Count == 0)
             return string.Empty;
@@ -122,16 +126,19 @@ internal static class TableHelper
         var properties = GetProperties(table, overrideList);
 
         // Add the header line
-        var headerList = new List<string>();
-        if (printLineNumbers)
-            headerList.Add("Row");
+        if (addHeader)
+        {
+            var headerList = new List<string>();
+            if (printLineNumbers)
+                headerList.Add("Row");
 
-        headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
-            ? s.Name
-            : s.Appearance.Name));
+            headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
+                ? s.Name
+                : s.Appearance.Name));
 
-        // Add the header to the content
-        content.AppendLine(string.Join(delimiter, headerList));
+            // Add the header to the content
+            content.AppendLine(string.Join(delimiter, headerList));
+        }
 
         // Add the content
         var rowCount = 1;
@@ -142,8 +149,8 @@ internal static class TableHelper
             if (printLineNumbers)
                 valueList.Add(rowCount.ToString());
 
-            //valueList.AddRange(properties.Select(property => row[property.Name].ToString() ?? string.Empty));
-            valueList.AddRange(properties.Select(property => GetPropertyValue(row, property.Name, property.Appearance.Format)));
+            valueList.AddRange(properties.Select(property => GetPropertyValue(row, property.Name,
+                property.Appearance.Format, property.Appearance.EncapsulateContent)));
 
             content.AppendLine(string.Join(delimiter, valueList));
 
@@ -268,8 +275,9 @@ internal static class TableHelper
     /// </summary>
     /// <param name="obj">The object which contains the data</param>
     /// <param name="property">The property with the needed values (name, appearance values)</param>
+    /// <param name="isCsvExport"><see langword="true"/> to indicate that the method is used during the CSV export. If so, the <see cref="Property.EncapsulateContent"/> value should be considered</param>
     /// <returns>The property value</returns>
-    public static string GetPropertyValue(object obj, Property property)
+    public static string GetPropertyValue(object obj, Property property, bool isCsvExport)
     {
         var tmpProperty = obj.GetType().GetProperty(property.Name);
         var value = tmpProperty?.GetValue(obj, null);
@@ -278,9 +286,14 @@ internal static class TableHelper
             return string.Empty;
 
         var tmpValue = value.ToString() ?? string.Empty;
-        return string.IsNullOrEmpty(property.Appearance.Format)
+        var formattedValue = string.IsNullOrEmpty(property.Appearance.Format)
             ? tmpValue
             : string.Format($"{{0:{property.Appearance.Format}}}", value);
+
+        if (!isCsvExport)
+            return formattedValue;
+
+        return property.EncapsulateContent ? $"\"{formattedValue}\"" : formattedValue;
     }
 
     /// <summary>
@@ -289,13 +302,16 @@ internal static class TableHelper
     /// <param name="row">The data row</param>
     /// <param name="propertyName">The name of the property aka column name</param>
     /// <param name="format">The desired format</param>
+    /// <param name="encapsulateContent">The value which indicates if the content should be encapsulated by quotes</param>
     /// <returns>The property value</returns>
-    public static string GetPropertyValue(DataRow row, string propertyName, string format = "")
+    public static string GetPropertyValue(DataRow row, string propertyName, string format, bool encapsulateContent)
     {
         var value = row[propertyName]; // Note: Cannot be null, because the name of the property was gathered by the GetProperties method
         var tmpValue = value.ToString() ?? string.Empty;
 
-        return string.IsNullOrEmpty(format) ? tmpValue : string.Format($"{{0:{format}}}", value);
+        var formattedValue = string.IsNullOrEmpty(format) ? tmpValue : string.Format($"{{0:{format}}}", value);
+
+        return encapsulateContent ? $"\"{formattedValue}\"" : formattedValue;
     }
 
     /// <summary>
@@ -310,7 +326,7 @@ internal static class TableHelper
         var values = properties.Select(s => (Property)s).ToList();
 
         if (overrideList == null || overrideList.Count == 0)
-            return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
+            return [.. values.Where(w => !w.Ignore).OrderBy(o => o.Order)];
 
         foreach (var entry in values)
         {
@@ -319,7 +335,7 @@ internal static class TableHelper
                 entry.Appearance = overrideEntry.Appearance;
         }
 
-        return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
+        return [.. values.Where(w => !w.Ignore).OrderBy(o => o.Order)];
     }
 
     /// <summary>
@@ -336,7 +352,7 @@ internal static class TableHelper
                     ?.FirstOrDefault(f => f.PropertyName.Equals(column.ColumnName, StringComparison.OrdinalIgnoreCase))
                     ?.Appearance)).ToList();
 
-        return values.Where(w => !w.Ignore).OrderBy(o => o.Order).ToList();
+        return [.. values.Where(w => !w.Ignore).OrderBy(o => o.Order)];
     }
 
     /// <summary>
