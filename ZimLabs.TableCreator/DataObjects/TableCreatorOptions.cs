@@ -18,7 +18,7 @@ public sealed class TableCreatorOptions
     public bool PrintLineNumbers { get; init; }
 
     /// <summary>
-    /// Gets or sets the delimiter which should be used for the CSV export. (default = <c>;</c>).
+    /// Gets or sets the delimiter which should be used for the CSV export (default = <c>;</c>).
     /// </summary>
     /// <remarks>
     /// <b>Note</b>: This value is only needed when the <see cref="OutputType"/> is set to <see cref="OutputType.Csv"/>.
@@ -42,7 +42,7 @@ public sealed class TableCreatorOptions
     public bool AddHeader { get; init; } = true;
 
     /// <summary>
-    /// Gets or sets the value which indicates whether <i>text</i> values should be encapsulated with quotation marks.
+    /// Gets or sets the value which indicates whether <i>text</i> values should be encapsulated with quotation marks (default = <see langword="false"/>).
     /// </summary>
     /// <remarks>
     /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
