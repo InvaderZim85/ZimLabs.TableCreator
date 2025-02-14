@@ -8,14 +8,16 @@
     <Copyright>Andreas Pouwels</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>ZimLabs.TableCreator</Title>
-    <Version>2.1.1</Version>
+    <Version>3.0.0</Version>
+      <AssemblyVersion>3.0.0</AssemblyVersion>
+      <FileVersion>3.0.0</FileVersion>
     <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
     <PackageIcon>Logo.png</PackageIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
-    <PackageReleaseNotes>BREAKING CHANGE: Updated the framework from .NET Standard to .NET 7</PackageReleaseNotes>
+    <PackageReleaseNotes>BREAKING CHANGE: Updated the framework from .NET 7 / 8 to .NET 9.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
