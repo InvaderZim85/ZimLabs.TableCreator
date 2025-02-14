@@ -1,27 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-      <Authors>Andreas Pouwels</Authors>
-      <Description>Library to convert a list of values into a "table" (ASCII-styled, markdown, csv)</Description>
-      <Copyright>Andreas Pouwels</Copyright>
-      <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-      <Title>ZimLabs.TableCreator</Title>
-      <Version>2.1.1</Version>
-      <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
-      <PackageIcon>Logo.png</PackageIcon>
-      <PackageReadmeFile>readme.md</PackageReadmeFile>
-      <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
-      <RepositoryType>git</RepositoryType>
-      <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
-      <PackageReleaseNotes>BREAKING CHANGE: Updated the framework from .NET Standard to .NET 7</PackageReleaseNotes>
-      <PackageLicenseExpression>MIT</PackageLicenseExpression>
-      <GenerateDocumentationFile>True</GenerateDocumentationFile>
-      <LangVersion>latest</LangVersion>
+    <Authors>Andreas Pouwels</Authors>
+    <Description>Library to convert a list of values into a "table" (ASCII-styled, markdown, csv)</Description>
+    <Copyright>Andreas Pouwels</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>ZimLabs.TableCreator</Title>
+    <Version>2.1.1</Version>
+    <PackageProjectUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</PackageProjectUrl>
+    <PackageIcon>Logo.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/InvaderZim85/ZimLabs.TableCreator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>helper, table, markdown, csv, ascii, output</PackageTags>
+    <PackageReleaseNotes>BREAKING CHANGE: Updated the framework from .NET Standard to .NET 7</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\Logo.png">
       <Pack>True</Pack>
@@ -32,5 +30,4 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
 </Project>

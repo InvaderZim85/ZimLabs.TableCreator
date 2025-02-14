@@ -52,57 +52,79 @@ internal static class TableHelper
     }
 
     /// <summary>
-    /// Creates a CSV formatted string of the list
+    /// Creates a CSV formatted string of the value list.
     /// </summary>
-    /// <typeparam name="T">The type</typeparam>
-    /// <param name="list">The list with the values</param>
-    /// <param name="delimiter">The delimiter which should be used for CSV</param>
-    /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-    /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/></param>
-    /// <param name="overrideList">The list with the override entries</param>
-    /// <returns>The csv file content</returns>
-    public static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers, bool addHeader,
+    /// <typeparam name="T">The type of the data.</typeparam>
+    /// <param name="list">The list with the values.</param>
+    /// <param name="delimiter">The delimiter which should be used for CSV.</param>
+    /// <param name="printLineNumbers"><see langword="true"/> to print line numbers, otherwise <see langword="false"/>.</param>
+    /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/>.</param>
+    /// <param name="encapsulateText">The value which indicates whether text values should be encapsulated with quotation marks.</param>
+    /// <param name="overrideList">The list with the override entries.</param>
+    /// <returns>The csv file content.</returns>
+    public static string CreateCsv<T>(IEnumerable<T> list, string delimiter, bool printLineNumbers, bool addHeader, bool encapsulateText,
         List<OverrideAttributeEntry>? overrideList)
     {
+        return CreateCsv(list, new TableCreatorOptions
+        {
+            Delimiter = delimiter,
+            PrintLineNumbers = printLineNumbers,
+            AddHeader = addHeader,
+            EncapsulateText = encapsulateText,
+            OverrideList = overrideList ?? []
+        });
+    }
+
+    /// <summary>
+    /// Creates a CSV formatted string of the value list.
+    /// </summary>
+    /// <typeparam name="T">The type of the data.</typeparam>
+    /// <param name="list">The list which contains the values.</param>
+    /// <param name="options">The desired options like the delimiter.</param>
+    /// <returns>The CSV file content.</returns>
+    public static string CreateCsv<T>(IEnumerable<T> list, TableCreatorOptions options)
+    {
+        // Remove all possible "null" values
         var tmpList = list.Where(w => w != null).ToList();
 
         if (tmpList.Count == 0)
-            return string.Empty;
+            return string.Empty; // Return an empty string.
 
+        // Prepare the result
         var content = new StringBuilder();
 
         // Get the properties
-        var properties = GetProperties<T>(overrideList);
+        var properties = GetProperties<T>(options.OverrideList);
 
-        // Add header line
-        if (addHeader)
+        // Add the header (if desired)
+        if (options.AddHeader)
         {
             var headerList = new List<string>();
-            if (printLineNumbers)
+            if (options.PrintLineNumbers)
                 headerList.Add("Row");
 
-            headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
-                ? s.Name
-                : s.Appearance.Name));
+            // Add the header
+            headerList.AddRange(properties.Select(s => s.CustomName));
 
-            content.AppendLine(string.Join(delimiter, headerList));
+            // Add the header to the content
+            content.AppendLine(string.Join(options.Delimiter, headerList));
         }
 
         // Add the content
         var rowCount = 1;
-        foreach (var valueList in tmpList.Where(w => w != null).Select(entry => (from property in properties
+        foreach (var values in tmpList.Select(entry => (from property in properties
                      where !property.Appearance.Ignore
-                     select GetPropertyValue(entry!, property, true)).ToList()))
+                     select GetPropertyValue(entry, property, true)).ToList()))
         {
-            if (printLineNumbers)
-                valueList.Insert(0, rowCount.ToString());
+            if (options.PrintLineNumbers)
+                values.Insert(0, rowCount.ToString());
 
-            content.AppendLine(string.Join(delimiter, valueList));
+            content.AppendLine(string.Join(options.Delimiter, values));
 
             rowCount++;
         }
 
-        // Return the result
+        // Return the created content.
         return content.ToString();
     }
 
@@ -110,12 +132,9 @@ internal static class TableHelper
     /// Creates a CSV formatted string of the list
     /// </summary>
     /// <param name="table">The data table</param>
-    /// <param name="delimiter">The delimiter which should be used for CSV</param>
-    /// <param name="printLineNumbers">true to print line numbers, otherwise false</param>
-    /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/></param>
-    /// <param name="overrideList">The list with the override entries</param>
+    /// <param name="options">The desired options like the delimiter.</param>
     /// <returns>The csv file content</returns>
-    public static string CreateCsv(DataTable table, string delimiter, bool printLineNumbers, bool addHeader, List<OverrideAttributeEntry>? overrideList)
+    public static string CreateCsv(DataTable table, TableCreatorOptions options)
     {
         if (table.Rows.Count == 0)
             return string.Empty;
@@ -123,13 +142,13 @@ internal static class TableHelper
         var content = new StringBuilder();
 
         // Get the properties
-        var properties = GetProperties(table, overrideList);
+        var properties = GetProperties(table, options.OverrideList);
 
         // Add the header line
-        if (addHeader)
+        if (options.AddHeader)
         {
             var headerList = new List<string>();
-            if (printLineNumbers)
+            if (options.PrintLineNumbers)
                 headerList.Add("Row");
 
             headerList.AddRange(properties.Select(s => string.IsNullOrEmpty(s.Appearance.Name)
@@ -137,7 +156,7 @@ internal static class TableHelper
                 : s.Appearance.Name));
 
             // Add the header to the content
-            content.AppendLine(string.Join(delimiter, headerList));
+            content.AppendLine(string.Join(options.Delimiter, headerList));
         }
 
         // Add the content
@@ -146,13 +165,13 @@ internal static class TableHelper
         {
             var valueList = new List<string>();
 
-            if (printLineNumbers)
+            if (options.PrintLineNumbers)
                 valueList.Add(rowCount.ToString());
 
             valueList.AddRange(properties.Select(property => GetPropertyValue(row, property.Name,
                 property.Appearance.Format, property.Appearance.EncapsulateContent)));
 
-            content.AppendLine(string.Join(delimiter, valueList));
+            content.AppendLine(string.Join(options.Delimiter, valueList));
 
             rowCount++;
         }
