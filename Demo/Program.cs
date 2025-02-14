@@ -59,7 +59,8 @@ internal static class Program
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
             Console.WriteLine(dataTable.CreateTable(new TableCreatorOptions
             {
-                OutputType = outputType
+                OutputType = outputType,
+                OverrideList = overrideList
             }));
         }
     }
