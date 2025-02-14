@@ -25,6 +25,12 @@ internal static class Program
         WrongMethodTest();
 
         CsvEncapsulateContentTest();
+
+        // Run the benchmark
+        Console.WriteLine("Benchmarks");
+        Console.WriteLine("==========");
+        Console.WriteLine();
+        BenchmarkRunner.Run<BenchmarkTest>();
     }
 
     private static void TableTest()
@@ -51,7 +57,10 @@ internal static class Program
             var tmpValue = $"Output type: {outputType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(dataTable.CreateTable(outputType, overrideList: overrideList));
+            Console.WriteLine(dataTable.CreateTable(new TableCreatorOptions
+            {
+                OutputType = outputType
+            }));
         }
     }
 
@@ -66,7 +75,10 @@ internal static class Program
             var tmpValue = $"Output type: {outputType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(dummyList.CreateTable(outputType));
+            Console.WriteLine(dummyList.CreateTable(new TableCreatorOptions
+            {
+                OutputType = outputType
+            }));
         }
     }
 
@@ -81,7 +93,11 @@ internal static class Program
             var tmpValue = $"List type: {listType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(entry!.CreateValueList(listType, true));
+            Console.WriteLine(entry.CreateValueList(new TableCreatorListOptions
+            {
+                ListType = listType,
+                AlignProperties = true
+            }));
         }
 
         Console.WriteLine("Single class entry (w/o alignment)");
@@ -91,7 +107,10 @@ internal static class Program
             var tmpValue = $"List type: {listType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(entry!.CreateValueList(listType));
+            Console.WriteLine(entry.CreateValueList(new TableCreatorListOptions
+            {
+                ListType = listType
+            }));
         }
     }
 
@@ -113,7 +132,10 @@ internal static class Program
             var tmpValue = $"Output type: {outputType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(list.CreateTable(outputType));
+            Console.WriteLine(list.CreateTable(new TableCreatorOptions
+            {
+                OutputType = outputType
+            }));
         }
     }
 
@@ -135,7 +157,11 @@ internal static class Program
             var tmpValue = $"List type: {listType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(entry!.CreateValueList(listType, true));
+            Console.WriteLine(entry!.CreateValueList(new TableCreatorListOptions
+            {
+                ListType = listType,
+                AlignProperties = true
+            }));
         }
 
         Console.WriteLine("Single anonymous entry test (w/o alignment)");
@@ -145,7 +171,10 @@ internal static class Program
             var tmpValue = $"List type: {listType}";
             Console.WriteLine(tmpValue);
             Console.WriteLine("-".PadRight(tmpValue.Length, '-'));
-            Console.WriteLine(entry!.CreateValueList(listType));
+            Console.WriteLine(entry!.CreateValueList(new TableCreatorListOptions
+            {
+                ListType = listType
+            }));
         }
     }
 
@@ -157,7 +186,7 @@ internal static class Program
 
         try
         {
-            _ = emptyList!.CreateTable();
+            _ = emptyList!.CreateTable(new TableCreatorOptions());
         }
         catch (Exception ex)
         {
@@ -176,7 +205,7 @@ internal static class Program
 
         try
         {
-            _ = person!.CreateValueTable();
+            _ = person!.CreateValueTable(new TableCreatorOptions());
         }
         catch (Exception ex)
         {
@@ -195,7 +224,7 @@ internal static class Program
 
         try
         {
-            persons.CreateValueList();
+            persons.CreateValueList(new TableCreatorListOptions());
         }
         catch (Exception ex)
         {
@@ -207,15 +236,25 @@ internal static class Program
 
     private static void CsvEncapsulateContentTest()
     {
-        Console.WriteLine("CSV - Encapsulate content test");
-        Console.WriteLine("==============================");
+        Console.WriteLine("CSV - Encapsulate content test (only name)");
+        Console.WriteLine("==========================================");
 
         var persons = Helper.CreatePersonList();
 
         var content = persons.CreateTable(new TableCreatorOptions
         {
+            OutputType = OutputType.Csv
+        });
+
+        Console.WriteLine(content);
+
+        Console.WriteLine("CSV - Encapsulate content test (all text values)");
+        Console.WriteLine("================================================");
+
+        content = persons.CreateTable(new TableCreatorOptions
+        {
             OutputType = OutputType.Csv,
-            AddHeader = false
+            EncapsulateText = true
         });
 
         Console.WriteLine(content);

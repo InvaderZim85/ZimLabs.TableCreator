@@ -1,11 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using ZimLabs.TableCreator;
+using ZimLabs.TableCreator.DataObjects;
 
 namespace Demo;
 
-[SimpleJob(RuntimeMoniker.Net70, baseline: true)]
-[SimpleJob(RuntimeMoniker.Net80)]
+[SimpleJob(RuntimeMoniker.Net90)]
 [RPlotExporter]
 public class BenchmarkTest
 {
@@ -17,7 +17,7 @@ public class BenchmarkTest
     {
         var dummyData = Helper.CreatePersonList();
 
-        _ = dummyData.CreateTable();
+        _ = dummyData.CreateTable(new TableCreatorOptions());
     }
     #pragma warning restore CA1822 // Mark members as static
 
@@ -26,7 +26,7 @@ public class BenchmarkTest
     {
         var dummyData = Helper.CreatePersonList();
 
-        dummyData.SaveTable(_testFile);
+        dummyData.SaveTable(_testFile, new TableCreatorOptions());
     }
 
     [Benchmark]
@@ -34,6 +34,6 @@ public class BenchmarkTest
     {
         var dummyData = Helper.CreatePersonList();
 
-        return dummyData.SaveTableAsync(_testFile);
+        return dummyData.SaveTableAsync(_testFile, new TableCreatorOptions());
     }
 }

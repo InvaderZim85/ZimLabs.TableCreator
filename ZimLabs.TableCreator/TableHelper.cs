@@ -112,9 +112,9 @@ internal static class TableHelper
 
         // Add the content
         var rowCount = 1;
-        foreach (var values in tmpList.Select(entry => (from property in properties
+        foreach (var values in tmpList.Where(w => w != null).Select(entry => (from property in properties
                      where !property.Appearance.Ignore
-                     select GetPropertyValue(entry, property, true)).ToList()))
+                     select GetPropertyValue(entry!, property, true, options.EncapsulateText)).ToList()))
         {
             if (options.PrintLineNumbers)
                 values.Insert(0, rowCount.ToString());
@@ -295,8 +295,9 @@ internal static class TableHelper
     /// <param name="obj">The object which contains the data</param>
     /// <param name="property">The property with the needed values (name, appearance values)</param>
     /// <param name="isCsvExport"><see langword="true"/> to indicate that the method is used during the CSV export. If so, the <see cref="Property.EncapsulateContent"/> value should be considered</param>
+    /// <param name="encapsulateText"><see langword="true"/> to encapsulate text values even if the property value is set to <see langword="false"/>.</param>
     /// <returns>The property value</returns>
-    public static string GetPropertyValue(object obj, Property property, bool isCsvExport)
+    public static string GetPropertyValue(object obj, Property property, bool isCsvExport, bool encapsulateText)
     {
         var tmpProperty = obj.GetType().GetProperty(property.Name);
         var value = tmpProperty?.GetValue(obj, null);
@@ -311,6 +312,12 @@ internal static class TableHelper
 
         if (!isCsvExport)
             return formattedValue;
+
+        // Note: We ignore the value "EncapsulateContent" if the value "encapsulateText" is set to true.
+        //       But note that the value only applies to text fields! All other types are not taken into account.
+        var isText = tmpProperty != null && tmpProperty.PropertyType == typeof(string);
+        if (isText && encapsulateText)
+            return $"\"{formattedValue}\"";
 
         return property.EncapsulateContent ? $"\"{formattedValue}\"" : formattedValue;
     }

@@ -46,7 +46,7 @@ public static class TableCreator
         var count = 1;
         printList.AddRange(list.Select(entry => new LineEntry(count++)
         {
-            Values = properties.Select(s => new ValueEntry(s.Name, TableHelper.GetPropertyValue(entry, s, false)))
+            Values = properties.Select(s => new ValueEntry(s.Name, TableHelper.GetPropertyValue(entry, s, false, options.EncapsulateText)))
                 .ToList()
         }));
 
@@ -73,11 +73,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored.</param>
     /// <returns>The created table.</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/>.</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'CreateTable<T>(this IEnumerable<T> list, TableCreatorOptions options)' method instead.", false)]
     public static string CreateTable<T>(this IEnumerable<T> list, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", bool addHeader = true, bool encapsulateText = false,
         List<OverrideAttributeEntry>? overrideList = null)
@@ -107,7 +108,7 @@ public static class TableCreator
     {
         var result = CreateTable(list, options);
 
-        File.WriteAllText(filepath, result);
+        File.WriteAllText(filepath, result, options.Encoding);
     }
 
     /// <summary>
@@ -123,11 +124,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored.</param>
     /// <returns>The created table.</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/>.</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTable<T>(this IEnumerable<T> list, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveTable<T>(this IEnumerable<T> list, string filepath,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -135,7 +137,6 @@ public static class TableCreator
     {
         list.SaveTable(filepath, new TableCreatorOptions
         {
-            Encoding = Encoding.UTF8,
             OutputType = outputType,
             PrintLineNumbers = printLineNumbers,
             Delimiter = delimiter,
@@ -159,11 +160,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored.</param>
     /// <returns>The created table.</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/>.</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTable<T>(this IEnumerable<T> list, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveTable<T>(this IEnumerable<T> list, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -195,7 +197,7 @@ public static class TableCreator
     {
         var result = CreateTable(list, options);
 
-        await File.WriteAllTextAsync(filepath, result);
+        await File.WriteAllTextAsync(filepath, result, options.Encoding);
     }
 
     /// <summary>
@@ -211,11 +213,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTableAsync<T>(this IEnumerable<T> list, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveTableAsync<T>(this IEnumerable<T> list, string filepath,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -246,11 +249,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTableAsync<T>(this IEnumerable<T> list, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveTableAsync<T>(this IEnumerable<T> list, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -258,6 +262,7 @@ public static class TableCreator
     {
         await list.SaveTableAsync(filepath, new TableCreatorOptions
         {
+            Encoding = encoding,
             OutputType = outputType,
             PrintLineNumbers = printLineNumbers,
             Delimiter = delimiter,
@@ -331,11 +336,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The created table</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'CreateTable(this DataTable table, TableCreatorOptions options)' method instead.", false)]
     public static string CreateTable(this DataTable table, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", bool addHeader = true, bool encapsulateText = false,
         List<OverrideAttributeEntry>? overrideList = null)
@@ -376,11 +382,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/>. This value is only used when the <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/></param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTable(this DataTable table, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveTable(this DataTable table, string filepath, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", bool addHeader = true, bool encapsulateText = false,
         List<OverrideAttributeEntry>? overrideList = null)
@@ -409,11 +416,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="addHeader"><see langword="true"/> to add a header, otherwise <see langword="false"/>. This value is only used when the <paramref name="outputType"/> is set to <see cref="OutputType.Csv"/></param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTable(this DataTable table, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveTable(this DataTable table, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -457,6 +465,7 @@ public static class TableCreator
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTableAsync(this DataTable table, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveTableAsync(this DataTable table, string filepath,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, List<OverrideAttributeEntry>? overrideList = null)
@@ -485,6 +494,7 @@ public static class TableCreator
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown if the provided list is <see langword="null"/></exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveTableAsync(this DataTable table, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveTableAsync(this DataTable table, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, List<OverrideAttributeEntry>? overrideList = null)
@@ -515,7 +525,31 @@ public static class TableCreator
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
     public static string CreateValueList<T>(this T value, TableCreatorListOptions options) where T : class
     {
-        return CreateValueList(value, options.ListType, options.AlignProperties, options.OverrideList);
+        if (TableHelper.IsList<T>())
+        {
+            throw new NotSupportedException(
+                "The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
+        }
+
+        ArgumentNullException.ThrowIfNull(value);
+
+        // Get the properties
+        var properties = TableHelper.GetProperties<T>(options.OverrideList);
+        var maxLength = properties.Select(s => s.CustomName).Max(m => m.Length);
+
+        var sb = new StringBuilder();
+
+        var count = 1;
+        foreach (var property in properties)
+        {
+            var listIndicator = options.ListType == ListType.Bullets ? "-" : $"{count++}.";
+            var dotLength = options.AlignProperties ? maxLength - property.CustomName.Length : 0;
+            sb.AppendLine(
+                $"{listIndicator} {property.CustomName}{"".PadRight(dotLength, '.')}: " +
+                $"{TableHelper.GetPropertyValue(value, property, false, false)}");
+        }
+
+        return sb.ToString();
     }
 
     /// <summary>
@@ -529,35 +563,17 @@ public static class TableCreator
     /// <returns>The list</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'CreateValueList<T>(this T value, TableCreatorListOptions options)' method instead.", false)]
     public static string CreateValueList<T>(this T value, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry>? overrideList = null)
         where T : class
     {
-        if (TableHelper.IsList<T>())
+        return value.CreateValueList(new TableCreatorListOptions
         {
-            throw new NotSupportedException(
-                "The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
-        }
-
-        ArgumentNullException.ThrowIfNull(value);
-
-        // Get the properties
-        var properties = TableHelper.GetProperties<T>(overrideList);
-        var maxLength = properties.Select(s => s.CustomName).Max(m => m.Length);
-
-        var sb = new StringBuilder();
-
-        var count = 1;
-        foreach (var property in properties)
-        {
-            var listIndicator = type == ListType.Bullets ? "-" : $"{count++}.";
-            var dotLength = alignProperties ? maxLength - property.CustomName.Length : 0;
-            sb.AppendLine(
-                $"{listIndicator} {property.CustomName}{"".PadRight(dotLength, '.')}: " +
-                $"{TableHelper.GetPropertyValue(value, property, false)}");
-        }
-
-        return sb.ToString();
+            ListType = type,
+            AlignProperties = alignProperties,
+            OverrideList = overrideList ?? []
+        });
     }
 
     /// <summary>
@@ -582,7 +598,7 @@ public static class TableCreator
         var properties = TableHelper.GetProperties<T>(options.OverrideList);
 
         var data = (from property in properties
-            let tmpValue = TableHelper.GetPropertyValue(value, property, options.OutputType == OutputType.Csv)
+            let tmpValue = TableHelper.GetPropertyValue(value, property, options.OutputType == OutputType.Csv, options.EncapsulateText)
             select new KeyValueEntry(property.CustomName, tmpValue)).ToList();
 
         return CreateTable(data, options);
@@ -600,12 +616,13 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The created table</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'CreateValueTable<T>(this T value, TableCreatorOptions options)' method instead.", false)]
     public static string CreateValueTable<T>(this T value, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", bool addHeader = true, bool encapsulateText = false,
         List<OverrideAttributeEntry>? overrideList = null) where T : class
@@ -627,18 +644,38 @@ public static class TableCreator
     /// <typeparam name="T">The type of the value</typeparam>
     /// <param name="value">The value</param>
     /// <param name="filepath">The path of the destination file</param>
+    /// <param name="options">The options for the list creation</param>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    public static void SaveValue<T>(this T value, string filepath, TableCreatorListOptions options) where T : class
+    {
+        var result = value.CreateValueList(options);
+
+        File.WriteAllText(filepath, result, options.Encoding);
+    }
+
+    /// <summary>
+    /// Creates a list of the properties with its values and saves it into the specified file
+    /// </summary>
+    /// <typeparam name="T">The type of the value</typeparam>
+    /// <param name="value">The value</param>
+    /// <param name="filepath">The path of the destination file</param>
     /// <param name="type">The desired list type</param>
     /// <param name="alignProperties"><see langword="true"/> to add dots to the end of the properties so that all properties have the same length</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValue<T>(this T value, string filepath, TableCreatorListOptions options)' method instead.", false)]
     public static void SaveValue<T>(this T value, string filepath, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry>? overrideList = null)
         where T : class
     {
-        var result = value.CreateValueList(type, alignProperties, overrideList);
-
-        File.WriteAllText(filepath, result, Encoding.UTF8);
+        value.SaveValue(filepath, new TableCreatorListOptions
+        {
+            ListType = type,
+            AlignProperties = alignProperties,
+            OverrideList = overrideList ?? []
+        });
     }
 
     /// <summary>
@@ -653,27 +690,18 @@ public static class TableCreator
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValue<T>(this T value, string filepath, TableCreatorListOptions options)' method instead.", false)]
     public static void SaveValue<T>(this T value, string filepath, Encoding encoding, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry>? overrideList = null)
         where T : class
     {
-        var result = value.CreateValueList(type, alignProperties, overrideList);
-
-        File.WriteAllText(filepath, result, encoding);
-    }
-
-    /// <summary>
-    /// Creates a list of the properties with its values and saves it into the specified file
-    /// </summary>
-    /// <typeparam name="T">The type of the value</typeparam>
-    /// <param name="value">The value</param>
-    /// <param name="filepath">The path of the destination file</param>
-    /// <param name="options">The options for the list creation</param>
-    /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
-    /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-    public static void SaveValue<T>(this T value, string filepath, TableCreatorListOptions options) where T : class
-    {
-        SaveValue(value, filepath, options.Encoding, options.ListType, options.AlignProperties, options.OverrideList);
+        value.SaveValue(filepath, new TableCreatorListOptions
+        {
+            Encoding = encoding,
+            ListType = type,
+            AlignProperties = alignProperties,
+            OverrideList = overrideList ?? []
+        });
     }
 
     /// <summary>
@@ -700,7 +728,7 @@ public static class TableCreator
         var data = properties.Select(s => new
         {
             Key = s.CustomName,
-            Value = TableHelper.GetPropertyValue(value, s, options.OutputType == OutputType.Csv)
+            Value = TableHelper.GetPropertyValue(value, s, options.OutputType == OutputType.Csv, options.EncapsulateText)
         });
 
         data.SaveTable(filepath, options);
@@ -719,11 +747,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the specified value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsTable<T>(this T value, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveValueAsTable<T>(this T value, string filepath, OutputType outputType = OutputType.Default,
         bool printLineNumbers = false, string delimiter = ";", bool addHeader = true, bool encapsulateText = false,
         List<OverrideAttributeEntry>? overrideList = null) where T : class
@@ -754,11 +783,12 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <exception cref="ArgumentNullException">Will be thrown when the specified value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsTable<T>(this T value, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static void SaveValueAsTable<T>(this T value, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null) where T : class
@@ -781,18 +811,39 @@ public static class TableCreator
     /// <typeparam name="T">The type of the value</typeparam>
     /// <param name="value">The value</param>
     /// <param name="filepath">The path of the destination file</param>
+    /// <param name="options">The options for the list creation</param>
+    /// <returns>The awaitable task</returns>
+    /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
+    public static async Task SaveValueAsync<T>(this T value, string filepath, TableCreatorListOptions options) where T : class
+    {
+        var result = value.CreateValueList(options);
+
+        await File.WriteAllTextAsync(filepath, result, options.Encoding);
+    }
+
+    /// <summary>
+    /// Creates a list of the properties with its values and saves it into the specified file
+    /// </summary>
+    /// <typeparam name="T">The type of the value</typeparam>
+    /// <param name="value">The value</param>
+    /// <param name="filepath">The path of the destination file</param>
     /// <param name="type">The desired list type</param>
     /// <param name="alignProperties"><see langword="true"/> to add dots to the end of the properties so that all properties have the same length</param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-    public static Task SaveValueAsync<T>(this T value, string filepath, ListType type = ListType.Bullets,
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsync<T>(this T value, string filepath, TableCreatorListOptions options)' method instead.", false)]
+    public static async Task SaveValueAsync<T>(this T value, string filepath, ListType type = ListType.Bullets,
         bool alignProperties = false, List<OverrideAttributeEntry>? overrideList = null) where T : class
     {
-        var result = value.CreateValueList(type, alignProperties, overrideList);
-
-        return File.WriteAllTextAsync(filepath, result, Encoding.UTF8);
+        await value.SaveValueAsync(filepath, new TableCreatorListOptions
+        {
+            ListType = type,
+            AlignProperties = alignProperties,
+            OverrideList = overrideList ?? []
+        });
     }
 
     /// <summary>
@@ -808,29 +859,18 @@ public static class TableCreator
     /// <returns>The awaitable task</returns>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
     /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-    public static Task SaveValueAsync<T>(this T value, string filepath, Encoding encoding,
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsync<T>(this T value, string filepath, TableCreatorListOptions options)' method instead.", false)]
+    public static async Task SaveValueAsync<T>(this T value, string filepath, Encoding encoding,
         ListType type = ListType.Bullets, bool alignProperties = false, List<OverrideAttributeEntry>? overrideList = null)
         where T : class
     {
-        var result = value.CreateValueList(type, alignProperties, overrideList);
-
-        return File.WriteAllTextAsync(filepath, result, encoding);
-    }
-
-    /// <summary>
-    /// Creates a list of the properties with its values and saves it into the specified file
-    /// </summary>
-    /// <typeparam name="T">The type of the value</typeparam>
-    /// <param name="value">The value</param>
-    /// <param name="filepath">The path of the destination file</param>
-    /// <param name="options">The options for the list creation</param>
-    /// <returns>The awaitable task</returns>
-    /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
-    /// <exception cref="ArgumentNullException">Will be thrown when the value is null</exception>
-    public static Task SaveValueAsync<T>(this T value, string filepath, TableCreatorListOptions options) where T : class
-    {
-        return SaveValueAsync(value, filepath, options.Encoding, options.ListType, options.AlignProperties,
-            options.OverrideList);
+        await value.SaveValueAsync(filepath, new TableCreatorListOptions
+        {
+            Encoding = encoding,
+            ListType = type,
+            AlignProperties = alignProperties,
+            OverrideList = overrideList ?? []
+        });
     }
 
     /// <summary>
@@ -859,7 +899,7 @@ public static class TableCreator
         var data = properties.Select(s => new
         {
             Key = s.CustomName,
-            Value = TableHelper.GetPropertyValue(value, s, options.OutputType == OutputType.Csv)
+            Value = TableHelper.GetPropertyValue(value, s, options.OutputType == OutputType.Csv, options.EncapsulateText)
         });
 
         await data.SaveTableAsync(filepath, options);
@@ -878,12 +918,13 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the specified value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsTableAsync<T>(this T value, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveValueAsTableAsync<T>(this T value, string filepath,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)
@@ -915,12 +956,13 @@ public static class TableCreator
     /// <param name="encapsulateText">
     /// The value which indicates whether text values should be encapsulated with quotation marks.
     /// <para />
-    /// <b>Note</b>: If this value is set to <see langword="true"/>, the property is ignored on the respective property for <i>text</i> fields.
+    /// <b>Note</b>: If this value is set to <see langword="true"/>, the attribute is ignored on the respective property for <i>text</i> fields.
     /// </param>
     /// <param name="overrideList">The list with the override entries (optional). If you add an entry, the original <see cref="AppearanceAttribute"/> will be ignored</param>
     /// <returns>The awaitable task</returns>
     /// <exception cref="ArgumentNullException">Will be thrown when the specified value is null</exception>
     /// <exception cref="NotSupportedException">Will be thrown when the specified type is assignable from IEnumerable</exception>
+    [Obsolete("To keep the code clearer, this method will be removed in the next version. Please use the 'SaveValueAsTableAsync<T>(this T value, string filepath, TableCreatorOptions options)' method instead.", false)]
     public static async Task SaveValueAsTableAsync<T>(this T value, string filepath, Encoding encoding,
         OutputType outputType = OutputType.Default, bool printLineNumbers = false, string delimiter = ";",
         bool addHeader = true, bool encapsulateText = false, List<OverrideAttributeEntry>? overrideList = null)

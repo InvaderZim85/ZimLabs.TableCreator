@@ -10,7 +10,7 @@ internal sealed class Person
     [Appearance(Order = 3, EncapsulateContent = true)]
     public string Name { get; set; } = string.Empty;
 
-    [Appearance(Order = 2, EncapsulateContent = true)]
+    [Appearance(Order = 2)]
     public string Title { get; set; } = string.Empty;
 
     [Appearance(Ignore = true)]
