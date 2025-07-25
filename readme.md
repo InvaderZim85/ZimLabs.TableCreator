@@ -14,6 +14,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Changelog](#changelog)
+    - [Version 3.1.0](#version-310)
     - [Version 3.0.0](#version-300)
     - [Version 2.1.1](#version-211)
     - [Version 2.1.0](#version-210)
@@ -157,6 +158,10 @@ The specified type is not supported by this method. Please choose "CreateTable" 
 Sorry for the inconvenience.
 
 ## Changelog
+
+### Version 3.1.9
+
+Removed the old *obsolete* methods (for more information see [Version 3.0.0](#version-300))
 
 ### Version 3.0.0
 
