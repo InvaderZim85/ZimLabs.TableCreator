@@ -159,7 +159,7 @@ Sorry for the inconvenience.
 
 ## Changelog
 
-### Version 3.1.9
+### Version 3.1.0
 
 Removed the old *obsolete* methods (for more information see [Version 3.0.0](#version-300))
 
