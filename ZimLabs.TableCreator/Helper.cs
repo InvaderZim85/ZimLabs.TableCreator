@@ -8,7 +8,7 @@ namespace ZimLabs.TableCreator;
 /// <summary>
 /// Provides several helper functions
 /// </summary>
-internal static class TableHelper
+internal static class Helper
 {
     /// <summary>
     /// Creates the table
@@ -188,7 +188,7 @@ internal static class TableHelper
     /// <param name="widthList">The list with the column width</param>
     /// <param name="spacer">The default spacer</param>
     /// <returns>The line</returns>
-    public static string PrintLine(OutputType outputType, bool printLineNumbers, int maxLineLength,
+    private static string PrintLine(OutputType outputType, bool printLineNumbers, int maxLineLength,
         IReadOnlyList<ColumnWidth> widthList, int spacer = 2)
     {
         var lineStartEnd = outputType == OutputType.Markdown ? "|" : "+";
@@ -226,7 +226,7 @@ internal static class TableHelper
     /// </summary>
     /// <param name="widthList">The list with the column width</param>
     /// <returns>The header line</returns>
-    public static string PrintHeaderLine(IEnumerable<ColumnWidth> widthList)
+    private static string PrintHeaderLine(IEnumerable<ColumnWidth> widthList)
     {
         const string lineStartEnd = "|";
 
@@ -243,7 +243,7 @@ internal static class TableHelper
     /// <param name="line">The line which should be printed</param>
     /// <param name="header">true when the header should be printed</param>
     /// <returns>The value line</returns>
-    public static string PrintLine(bool printLineNumbers, int maxLineLength, IEnumerable<ColumnWidth> widthList, LineEntry line, bool header)
+    private static string PrintLine(bool printLineNumbers, int maxLineLength, IEnumerable<ColumnWidth> widthList, LineEntry line, bool header)
     {
         const string lineStartEnd = "|";
 
@@ -382,13 +382,14 @@ internal static class TableHelper
     }
 
     /// <summary>
-    /// Checks if the type is a "list"
+    /// Checks if the specified type is supported and throws a <see cref="NotSupportedException"/> exception if not.
     /// </summary>
-    /// <typeparam name="T">The type</typeparam>
-    /// <returns><see langword="true"/> when the type is a list, otherwise <see langword="false"/></returns>
-    public static bool IsList<T>()
+    /// <typeparam name="T">The desired type.</typeparam>
+    /// <exception cref="NotSupportedException">Will be thrown if the type is not supported.</exception>
+    public static void ThrowIfNotSupported<T>()
     {
         var type = typeof(T);
-        return typeof(IEnumerable).IsAssignableFrom(type);
+        if (typeof(IEnumerable).IsAssignableFrom(type))
+            throw new NotSupportedException("The specified type is not supported by this method. Please choose \"CreateTable\" or \"SaveTable\" instead.");
     }
 }
