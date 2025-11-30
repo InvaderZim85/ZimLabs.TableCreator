@@ -5,7 +5,7 @@ namespace Demo;
 /// <summary>
 /// Provides several helper functions
 /// </summary>
-internal sealed class Helper
+internal static class Helper
 {
     public static Person CreatePersonEntry()
     {

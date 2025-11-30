@@ -6,11 +6,6 @@
 internal sealed class ValueEntry
 {
     /// <summary>
-    /// Contains the custom column name
-    /// </summary>
-    private readonly string _customColumnName;
-
-    /// <summary>
     /// Gets the name of the column
     /// </summary>
     public string ColumnName { get; }
@@ -18,7 +13,7 @@ internal sealed class ValueEntry
     /// <summary>
     /// Gets the display name of the column
     /// </summary>
-    public string DisplayName => string.IsNullOrEmpty(_customColumnName) ? ColumnName : _customColumnName;
+    public string DisplayName => string.IsNullOrEmpty(field) ? ColumnName : field;
 
     /// <summary>
     /// Gets the value
@@ -35,7 +30,7 @@ internal sealed class ValueEntry
     {
         ColumnName = columnName;
         Value = value;
-        _customColumnName = customColumnName;
+        DisplayName = customColumnName;
     }
 
     /// <summary>
@@ -46,6 +41,6 @@ internal sealed class ValueEntry
     {
         ColumnName = property.Name;
         Value = string.IsNullOrEmpty(property.Appearance.Name) ? property.Name : property.Appearance.Name;
-        _customColumnName = property.Appearance.Name;
+        DisplayName = property.Appearance.Name;
     }
 }

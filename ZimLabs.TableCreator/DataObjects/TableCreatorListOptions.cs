@@ -35,4 +35,12 @@ public sealed class TableCreatorListOptions
     /// <b>Note</b>: If you add an entry, the original <see cref="AppearanceAttribute"/> of the desired property will be ignored.
     /// </remarks>
     public List<OverrideAttributeEntry> OverrideList { get; init; } = [];
+
+    /// <summary>
+    /// Creates a new, default instance of the options with its default settings (<see cref="ListType"/> = <see cref="ListType.Bullets"/>, <see cref="Encoding"/> = <see cref="Encoding.UTF8"/>).
+    /// </summary>
+    public TableCreatorListOptions()
+    {
+        
+    }
 }

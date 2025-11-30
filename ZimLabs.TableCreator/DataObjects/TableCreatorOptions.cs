@@ -56,4 +56,18 @@ public sealed class TableCreatorOptions
     /// <b>Note</b>: If you add an entry, the original <see cref="AppearanceAttribute"/> of the desired property will be ignored.
     /// </remarks>
     public List<OverrideAttributeEntry> OverrideList { get; init; } = [];
+
+    /// <summary>
+    /// Creates a new, empty instance of the options with its default settings (<see cref="OutputType"/> = <see cref="OutputType.Default"/>, <see cref="Delimiter"/> = <c>;</c> - only for CSV, <see cref="Encoding"/> = <see cref="Encoding.UTF8"/>).
+    /// </summary>
+    public TableCreatorOptions() { }
+
+    /// <summary>
+    /// Creates a new instance with the specified information and the default settings <see cref="Delimiter"/> = <c>;</c> (only for CSV) and <see cref="Encoding"/> = <see cref="Encoding.UTF8"/>.
+    /// </summary>
+    /// <param name="outputType">The output type.</param>
+    public TableCreatorOptions(OutputType outputType)
+    {
+        OutputType = outputType;
+    }
 }

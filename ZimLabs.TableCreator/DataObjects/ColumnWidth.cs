@@ -9,7 +9,7 @@
 /// <param name="columnName">The name of the column</param>
 /// <param name="width">The width of the column</param>
 /// <param name="align">The alignment of the column (optional)</param>
-internal readonly struct ColumnWidth(string columnName, int width, TextAlign align = TextAlign.Left)
+internal sealed class ColumnWidth(string columnName, int width, TextAlign align = TextAlign.Left)
 {
     /// <summary>
     /// Gets the name of the column

@@ -189,7 +189,7 @@ internal static class Helper
     /// <param name="spacer">The default spacer</param>
     /// <returns>The line</returns>
     private static string PrintLine(OutputType outputType, bool printLineNumbers, int maxLineLength,
-        IReadOnlyList<ColumnWidth> widthList, int spacer = 2)
+        List<ColumnWidth> widthList, int spacer = 2)
     {
         var lineStartEnd = outputType == OutputType.Markdown ? "|" : "+";
 
@@ -281,12 +281,14 @@ internal static class Helper
     public static List<ColumnWidth> GetColumnWidthList(IEnumerable<Property> properties,
         IReadOnlyCollection<LineEntry> printList)
     {
-        return (from property in properties
-                let maxValue = printList.SelectMany(s => s.Values)
-                    .Where(w => w.ColumnName.Equals(property.Name))
-                    .Max(m => m.Value.Length)
-                select new ColumnWidth(property.Name, maxValue, property.Appearance?.TextAlign ?? TextAlign.Left))
-            .ToList();
+        return
+        [
+            .. from property in properties
+            let maxValue = printList.SelectMany(s => s.Values)
+                .Where(w => w.ColumnName.Equals(property.Name))
+                .Max(m => m.Value.Length)
+            select new ColumnWidth(property.Name, maxValue, property.Appearance.TextAlign)
+        ];
     }
 
     /// <summary>
