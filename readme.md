@@ -14,7 +14,7 @@ This library is not very special :) It takes a list of objects and creates an AS
 - [Usage](#usage)
 - [Known issues](#known-issues)
 - [Changelog](#changelog)
-    - [Version 3.1.0](#version-311)
+    - [Version 3.1.1](#version-311)
     - [Version 3.1.0](#version-310)
     - [Version 3.0.0](#version-300)
     - [Version 2.1.1](#version-211)
